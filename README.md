@@ -24,3 +24,12 @@
 
 
 * the game represents a core logic of a famous game Dungeon. Find a way to a final destination and level up!
+
+### Project04:
+
+1         |  2
+-------------------------|-------------------------
+<img width="170" alt="Screen Shot 2022-04-10 at 12 12 43 AM" src="https://user-images.githubusercontent.com/58271101/162586698-982adcab-7a92-44b6-9e63-a5b7d55ece95.png"> | <img width="170" alt="Screen Shot 2022-04-10 at 12 12 55 AM" src="https://user-images.githubusercontent.com/58271101/162586701-8f850086-d6c4-4a64-8758-90607b9836ed.png">
+
+
+* Simple project, but with the powerful usage of <strong> Core Machine Learning technology </strong> . It makes predictions by given sample datas. In the case of a project, the data of 10,000 cases were given, to make a prediction of a actual time of a sleep based on expection of the sleep hours and cup of coffee consumed.
