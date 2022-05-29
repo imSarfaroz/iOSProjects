@@ -47,6 +47,14 @@
 
 1         |  2 |  3
 -------------------------|-------------------------|-------------------------
+<img width="170" alt="Screen Shot 2022-05-29 at 9 30 18 PM" src="https://user-images.githubusercontent.com/58271101/170877645-71abb08f-a203-4637-8178-a467a17e84d8.png">| <img width="170" alt="Screen Shot 2022-05-29 at 9 30 56 PM" src="https://user-images.githubusercontent.com/58271101/170877735-eac5878d-6df8-436a-9df4-2a36e1d9216a.png">|<img width="170" alt="Screen Shot 2022-05-29 at 9 31 05 PM" src="https://user-images.githubusercontent.com/58271101/170877674-04c6bf26-3ec6-4c73-ad7b-8d4eef0fb501.png">
+
+* The game is a logical represantation of the famous game KABOOM. Complete various logical and mathematical instructions given based on the level of the game and defuse the bomb!
+
+### Project07:
+
+1         |  2 |  3
+-------------------------|-------------------------|-------------------------
 <img width="170" alt="Screen Shot 2022-05-17 at 8 09 47 PM" src="https://user-images.githubusercontent.com/58271101/168833465-06452b56-6cbb-485b-b842-bb96a5bbf032.png"> | <img width="170" alt="Screen Shot 2022-05-17 at 8 09 59 PM" src="https://user-images.githubusercontent.com/58271101/168833578-68776b0b-4e3b-4660-9a75-38da8c5737e9.png"> | <img width="170" alt="Screen Shot 2022-05-17 at 8 10 17 PM" src="https://user-images.githubusercontent.com/58271101/168833664-dea9172a-c343-4d2a-8853-e69c55e737b3.png">
 
 * The project was developed with the usage of lists and other data structures in swift. This project was developed and being developed to bring all university services in one App. More works to be done and better structure is required so it could be my first App to be uploaded in AppStore.
