@@ -1,7 +1,4 @@
 
-//  Created by Sarfaroz on 2/11/22.
-// IPHONE 11
-
 import SwiftUI
 
 enum BombState {
@@ -323,6 +320,17 @@ struct ContentView: View {
                             .cornerRadius(20)
                         }
                         
+                        Button("Restart"){restart()
+                        }.buttonStyle(.borderedProminent)
+                            .cornerRadius(20)
+                            .fixedSize()
+                        Spacer()
+                    }
+                    .padding(10)
+                }
+            }
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
