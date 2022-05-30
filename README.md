@@ -58,3 +58,13 @@
 <img width="170" alt="Screen Shot 2022-05-17 at 8 09 47 PM" src="https://user-images.githubusercontent.com/58271101/168833465-06452b56-6cbb-485b-b842-bb96a5bbf032.png"> | <img width="170" alt="Screen Shot 2022-05-17 at 8 09 59 PM" src="https://user-images.githubusercontent.com/58271101/168833578-68776b0b-4e3b-4660-9a75-38da8c5737e9.png"> | <img width="170" alt="Screen Shot 2022-05-17 at 8 10 17 PM" src="https://user-images.githubusercontent.com/58271101/168833664-dea9172a-c343-4d2a-8853-e69c55e737b3.png">
 
 * The project was developed with the usage of lists and other data structures in swift. This project was developed and being developed to bring all university services in one App. More works to be done and better structure is required so it could be my first App to be uploaded in AppStore.
+
+
+### Project08:
+<video width="170" src="https://user-images.githubusercontent.com/58271101/170939095-94526a2e-b2c7-4676-a96a-68464d8a43dd.mov">
+
+* The project gets the countries information from remote API (https://restcountries.com/) and presents real-time information about the countries. 
+
+  
+
+
