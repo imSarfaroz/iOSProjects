@@ -61,9 +61,9 @@
 
 
 ### Project08:
-<video width="170" src="https://user-images.githubusercontent.com/58271101/170939095-94526a2e-b2c7-4676-a96a-68464d8a43dd.mov">
+https://user-images.githubusercontent.com/58271101/170939095-94526a2e-b2c7-4676-a96a-68464d8a43dd.mov
 
-* The project gets the countries information from remote API (https://restcountries.com/) and presents real-time information about the countries. 
+* The project gets the countries information from remote API  and presents real-time information about the countries. 
 
   
 
