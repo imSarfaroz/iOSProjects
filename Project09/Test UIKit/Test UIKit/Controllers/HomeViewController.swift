@@ -64,8 +64,6 @@ class HomeViewController: UIViewController {
         
         homeFeedTable.frame = view.bounds
     }
-    
-    
 
 }
 
