@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import InputBarAccessoryView
 import MessageKit
 
 struct Sender: SenderType {
     var senderId: String
-    
     var displayName: String
 }
 
@@ -44,20 +44,30 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         
         messages.append(Message(sender: currentUser, messageId: "1",
                                 sentDate: Date().addingTimeInterval(-86400), kind: .text("thank!")))
+        messages.append(Message(sender: currentUser, messageId: "1",
+                                sentDate: Date().addingTimeInterval(-86400), kind: .text("ho")))
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         
-        // Do any additional setup after loading the view.
     }
+    
+    func insertNewMessage(_ message: Message) {
+            messages.append(message)
+            messagesCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        }
     
     func currentSender() -> SenderType {
         return currentUser
     }
-//    func currentUsers() {
-//        return currentUser
-//    }
+    func currentUsers() {
+        return currentUser
+    }
+    
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
     }
@@ -65,4 +75,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
+    
+    
 }

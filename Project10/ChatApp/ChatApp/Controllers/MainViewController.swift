@@ -61,9 +61,7 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewUITableViewCell.identifier, for: indexPath)
                 as? CollectionViewUITableViewCell else { return UITableViewCell() }
-        
-//        cell.textLabel?.text = "Jane Cooper"
-//        cell.accessoryType = .disclosureIndicator
+    
         return cell
     }
 
@@ -71,20 +69,20 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = ChatViewController()
-        vc.title = "Chat"
+        vc.title = "Bob Thomas"
         navigationController?.pushViewController(vc ,animated: true)
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 76
     }
     
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else {return}
         header.textLabel?.font = .systemFont(ofSize: 34, weight: .bold)
-        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y - 15, width: 100,
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y - 20, width: 100,
                                          height: header.bounds.height)
         header.textLabel?.textColor = .black
         header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
