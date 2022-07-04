@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "InputBarAccessoryView",
+        "repositoryURL": "https://github.com/nathantannar4/InputBarAccessoryView",
+        "state": {
+          "branch": null,
+          "revision": "2843b4454cfb6de5b4d1e5939fef2dd6257b69ee",
+          "version": "5.5.0"
+        }
+      },
+      {
+        "package": "MessageKit",
+        "repositoryURL": "https://github.com/MessageKit/MessageKit.git",
+        "state": {
+          "branch": null,
+          "revision": "84236d91ac5783e3ecbefc15b82d854476720115",
+          "version": "3.8.0"
+        }
+      },
+      {
+        "package": "SDWebImage",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
+        "state": {
+          "branch": "master",
+          "revision": "c4b8660bb3ef543fe4bdcaac0db956b32dc5583f",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
