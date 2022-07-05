@@ -7,7 +7,6 @@
 
 import UIKit
 import SDWebImage
-import SwiftUI
 
 class CollectionViewUITableViewCell: UITableViewCell {
     
@@ -49,7 +48,7 @@ class CollectionViewUITableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .semibold)
-        label.text = "Bob Thomas"
+        label.text = "Jack Johnson"
         return label
     }()
     

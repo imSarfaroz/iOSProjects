@@ -8,13 +8,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-        
-        private let homeTable: UITableView = {
-            let table = UITableView()
-            table.register(CollectionViewUITableViewCell.self, forCellReuseIdentifier: CollectionViewUITableViewCell.identifier)
-            table.translatesAutoresizingMaskIntoConstraints = false
-            return table
-        }()
+    
+    private let homeTable: UITableView = {
+        let table = UITableView()
+        table.register(CollectionViewUITableViewCell.self, forCellReuseIdentifier: CollectionViewUITableViewCell.identifier)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
     
     let segmentControl: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["Звонки", "Чат"])
@@ -24,10 +24,9 @@ class ViewController: UIViewController {
         return segment
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         navigationItem.titleView = segmentControl
         configureNavigationBar()
@@ -47,7 +46,6 @@ class ViewController: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "person.fill.badge.plus"), style: .done, target: self, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .done, target: self, action: nil)
         ]
-        
         navigationController?.navigationBar.tintColor = UIColor.systemGreen
     }
 }
@@ -61,15 +59,15 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewUITableViewCell.identifier, for: indexPath)
                 as? CollectionViewUITableViewCell else { return UITableViewCell() }
-    
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = ChatViewController()
-        vc.title = "Bob Thomas"
+        vc.title = "Jack Johnson"
         navigationController?.pushViewController(vc ,animated: true)
         
     }
@@ -84,9 +82,7 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.font = .systemFont(ofSize: 34, weight: .bold)
         header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y - 20, width: 100,
                                          height: header.bounds.height)
-        header.textLabel?.textColor = .black
         header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
-        
         header.textLabel?.textColor = .black
     }
     
