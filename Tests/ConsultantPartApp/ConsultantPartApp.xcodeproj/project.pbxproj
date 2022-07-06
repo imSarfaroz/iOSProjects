@@ -15,7 +15,6 @@
 		A9C59381287595B500233D13 /* ChatViewUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C59380287595B500233D13 /* ChatViewUITableViewCell.swift */; };
 		A9C5938428759F3500233D13 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9C5938328759F3500233D13 /* SDWebImageMapKit */; };
 		A9C593872875A61600233D13 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9C593862875A61600233D13 /* MessageKit */; };
-		A9C593892875B18100233D13 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C593882875B18100233D13 /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		A99A056C28755693008F05A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A99A057128755693008F05A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9C59380287595B500233D13 /* ChatViewUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewUITableViewCell.swift; sourceTree = "<group>"; };
-		A9C593882875B18100233D13 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				A9C59380287595B500233D13 /* ChatViewUITableViewCell.swift */,
-				A9C593882875B18100233D13 /* HeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,7 +165,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9C593892875B18100233D13 /* HeaderView.swift in Sources */,
 				A99A056828755692008F05A0 /* ViewController.swift in Sources */,
 				A99A056428755692008F05A0 /* AppDelegate.swift in Sources */,
 				A9C59381287595B500233D13 /* ChatViewUITableViewCell.swift in Sources */,

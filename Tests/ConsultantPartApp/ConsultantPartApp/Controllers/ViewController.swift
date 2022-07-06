@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController{
-
+    
     
     private let startChatButton: UIButton = {
         let button = UIButton()
@@ -60,6 +60,7 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        title = "Консультант"
         
         view.addSubview(startChatButton)
         view.addSubview(textField)
@@ -72,13 +73,20 @@ class ViewController: UIViewController{
         
         chatTableView.delegate = self
         chatTableView.dataSource = self
-
+        
         startChatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
         startChatButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         startChatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         startChatButton.widthAnchor.constraint(equalToConstant: view.frame.width - 20).isActive = true
         startChatButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         startChatButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        
+        configureNavbar()
+    }
+    
+    func configureNavbar() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: nil)
+        navigationController?.navigationBar.tintColor = .black
     }
     
     @objc func tapped() {
@@ -90,8 +98,6 @@ class ViewController: UIViewController{
         textField.widthAnchor.constraint(equalToConstant: 50).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
-    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -106,7 +112,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewUITableViewCell.identifier, for: indexPath)
         
         // set the text
-//        cell.textLabel?.text = "test"
+        //        cell.textLabel?.text = "test"
         return cell
     }
     
