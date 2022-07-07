@@ -73,5 +73,7 @@ extension CollectionViewUITableViewCell: UICollectionViewDelegate, UICollectionV
         
         return cell
     }
+    
+    
 }
 
