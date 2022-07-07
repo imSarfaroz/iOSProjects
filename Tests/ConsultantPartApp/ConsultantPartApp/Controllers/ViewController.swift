@@ -8,14 +8,16 @@
 import UIKit
 class ViewController: UIViewController{
     
+    var isTextFieldEmpty:Bool = true
+    
     private let startChatButton: UIButton = {
         let button = UIButton()
         button.setTitle("НАЧАТЬ ДИАЛОГ", for: .normal)
-        button.layer.cornerRadius = 24
+        button.layer.cornerRadius = 22
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = UIColor.systemGreen
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
+        button.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 18)
         
         return button
     }()
@@ -27,29 +29,22 @@ class ViewController: UIViewController{
         textField.font = UIFont.systemFont(ofSize: 15)
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.autocorrectionType = UITextAutocorrectionType.no
-        textField.keyboardType = UIKeyboardType.default
-        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.layer.cornerRadius = 20
+        textField.isHidden = true
         
-        textField.rightViewMode = UITextField.ViewMode.always
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let imageView = UIImageView()
         let image = UIImage(systemName: "paperclip", withConfiguration: UIImage.SymbolConfiguration(pointSize: 22))
         imageView.image = image
         imageView.tintColor = UIColor.systemGreen
         textField.rightView = imageView
-        textField.isHidden = true
+        textField.rightViewMode = UITextField.ViewMode.always
         
         return textField
     }()
     
-    @IBAction private func showKeyboardPressed() {
-        chatTextField.becomeFirstResponder()
-        
-    }
-    
     let chatTableView: UITableView = {
         let table = UITableView()
         table.register(CollectionViewUITableViewCell.self, forCellReuseIdentifier: CollectionViewUITableViewCell.identifier)
-        
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -61,8 +56,8 @@ class ViewController: UIViewController{
         
         view.addSubview(startChatButton)
         view.addSubview(chatTextField)
-        
         view.addSubview(chatTableView)
+        
         chatTableView.bottomAnchor.constraint(equalTo: startChatButton.topAnchor, constant: -10).isActive = true
         chatTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         chatTableView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
@@ -72,22 +67,36 @@ class ViewController: UIViewController{
         chatTableView.dataSource = self
         
         startChatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-        startChatButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        startChatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        startChatButton.widthAnchor.constraint(equalToConstant: view.frame.width - 20).isActive = true
-        startChatButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        startChatButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        startChatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        startChatButton.widthAnchor.constraint(equalToConstant: view.frame.width - 30).isActive = true
+        startChatButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         startChatButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
         
-        chatTextField.addTarget(self, action: #selector(onChange), for: .editingChanged)
+        chatTextField.addTarget(self, action: #selector(changeIconOnTextField), for: .editingChanged)
         
         configureNavbar()
-        
-//        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
-//        homeFeedTable.tableHeaderView = headerView
     }
     
+    @objc func changeIconOnTextField() {
+        if(chatTextField.text!.count > 0) {
+            let imageView = UIImageView()
+            let image = UIImage(systemName: "paperplane.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 22))
+            imageView.image = image
+            imageView.tintColor = UIColor.systemGreen
+            chatTextField.rightView = imageView
+        } else {
+            let imageView = UIImageView()
+            let image = UIImage(systemName: "paperclip", withConfiguration: UIImage.SymbolConfiguration(pointSize: 22))
+            imageView.image = image
+            imageView.tintColor = UIColor.systemGreen
+            chatTextField.rightView = imageView
+        }
+    }
+    
+    
     @objc func onChange() {
-        print(chatTextField.text)
+        print(chatTextField.text?.count ?? 0)
     }
     
     func configureNavbar() {
@@ -113,25 +122,21 @@ class ViewController: UIViewController{
         startChatButton.isHidden = true
         chatTextField.isHidden = false
         chatTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-        chatTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        chatTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        chatTextField.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        chatTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        chatTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
+        chatTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
+        chatTextField.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        chatTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    // number of cells in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
-    
-    // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewUITableViewCell.identifier, for: indexPath)
         return cell
     }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
@@ -146,7 +151,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         label.text = "06 июля 2022"
         label.font = .systemFont(ofSize: 14)
         label.textColor = UIColor.systemGreen
-        
         headerView.addSubview(label)
         
         return headerView
