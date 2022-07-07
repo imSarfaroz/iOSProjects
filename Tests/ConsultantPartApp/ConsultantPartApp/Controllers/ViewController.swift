@@ -6,9 +6,7 @@
 //
 
 import UIKit
-
 class ViewController: UIViewController{
-    
     
     private let startChatButton: UIButton = {
         let button = UIButton()
@@ -22,7 +20,7 @@ class ViewController: UIViewController{
         return button
     }()
     
-    let textField: UITextField = {
+    let chatTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "     Сообщение"
@@ -32,15 +30,9 @@ class ViewController: UIViewController{
         textField.keyboardType = UIKeyboardType.default
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         
-        //        textField.rightViewMode = UITextField.ViewMode.always
-        //        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        //        button.setImage(UIImage(named: "paperclip"), for: .normal)
-        //        button.tintColor = UIColor.systemGreen
-        //        textField.rightView = button
-        
         textField.rightViewMode = UITextField.ViewMode.always
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let image = UIImage(systemName: "paperclip")
+        let image = UIImage(systemName: "paperclip", withConfiguration: UIImage.SymbolConfiguration(pointSize: 22))
         imageView.image = image
         imageView.tintColor = UIColor.systemGreen
         textField.rightView = imageView
@@ -48,6 +40,11 @@ class ViewController: UIViewController{
         
         return textField
     }()
+    
+    @IBAction private func showKeyboardPressed() {
+        chatTextField.becomeFirstResponder()
+        
+    }
     
     let chatTableView: UITableView = {
         let table = UITableView()
@@ -60,10 +57,10 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Консультант"
+        //  title = "Консультант"
         
         view.addSubview(startChatButton)
-        view.addSubview(textField)
+        view.addSubview(chatTextField)
         
         view.addSubview(chatTableView)
         chatTableView.bottomAnchor.constraint(equalTo: startChatButton.topAnchor, constant: -10).isActive = true
@@ -81,22 +78,45 @@ class ViewController: UIViewController{
         startChatButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         startChatButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
         
+        chatTextField.addTarget(self, action: #selector(onChange), for: .editingChanged)
+        
         configureNavbar()
+        
+//        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+//        homeFeedTable.tableHeaderView = headerView
+    }
+    
+    @objc func onChange() {
+        print(chatTextField.text)
     }
     
     func configureNavbar() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .done, target: self, action: nil)
         navigationController?.navigationBar.tintColor = .black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis"), primaryAction: nil, menu: barButtonMenu)
+        
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.backward"), primaryAction: nil, menu: nil),
+            UIBarButtonItem(title: "Консультант", style: .done, target: self, action: nil)
+        ]
     }
+    
+    let barButtonMenu = UIMenu(title: "", children: [
+        UIAction(title: NSLocalizedString("Очистить Историю Чата", comment: ""), image: UIImage(systemName: "gobackward"), handler : {action in
+            print(action.title)
+        }),
+        UIAction(title: NSLocalizedString("Закрыть Чат", comment: ""), image: UIImage(systemName: "xmark")?.withTintColor(.red, renderingMode: .alwaysOriginal), handler: {action in
+            print(action.title)
+        }),
+    ])
     
     @objc func tapped() {
         startChatButton.isHidden = true
-        textField.isHidden = false
-        textField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-        textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        textField.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        chatTextField.isHidden = false
+        chatTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        chatTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        chatTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        chatTextField.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        chatTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
 
@@ -108,16 +128,29 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //create a new cell if needed or reuse an old one
         let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewUITableViewCell.identifier, for: indexPath)
-        
-        // set the text
-        //        cell.textLabel?.text = "test"
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+        
+        let label = UILabel()
+        label.frame = CGRect.init(x: 150, y: 0, width: headerView.frame.width-40, height: headerView.frame.height-40)
+        label.text = "06 июля 2022"
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = UIColor.systemGreen
+        
+        headerView.addSubview(label)
+        
+        return headerView
+    }
+    
     
 }

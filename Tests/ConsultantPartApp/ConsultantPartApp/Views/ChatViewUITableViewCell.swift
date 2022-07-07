@@ -16,26 +16,23 @@ class CollectionViewUITableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 12
-    
         imageView.tintColor = UIColor.white
         imageView.backgroundColor = UIColor.systemGreen
-        
         // need to be filled in module
         imageView.image = UIImage(systemName: "headphones")
 
         return imageView
     }()
 
-
     private let userTimeSentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22, weight: .thin)
+        label.font = .systemFont(ofSize: 12, weight: .thin)
         label.text = "9:41 AM"
 
         return label
     }()
-
+    
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +47,7 @@ class CollectionViewUITableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = UIColor.black
-        label.text = "This library provides an async..."
+        label.text = "This library provides an async ..."
         return label
 
     }()
@@ -61,8 +58,9 @@ class CollectionViewUITableViewCell: UITableViewCell {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(userMessageLabel)
-//        contentView.addSubview(userTimeSentLabel)
-//        contentView.addSubview(userReadView)
+        contentView.addSubview(userTimeSentLabel)
+        
+
         contentView.translatesAutoresizingMaskIntoConstraints = true
         
         let imageConstraints = [
@@ -79,22 +77,16 @@ class CollectionViewUITableViewCell: UITableViewCell {
             userMessageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             userMessageLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 10)
         ]
-//
-//        let timeConstraints = [
-//            userTimeSentLabel.leadingAnchor.constraint(equalTo: userNameLabel.trailingAnchor, constant: 60),
-//            userTimeSentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-//        ]
-//
-//        let readConstraints = [
-//            userReadView.leadingAnchor.constraint(equalTo: userTimeSentLabel.trailingAnchor, constant: 22),
-//            userReadView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8)
-//        ]
-//
+        
+        let timeConstraints = [
+            userTimeSentLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 190),
+            userTimeSentLabel.topAnchor.constraint(equalTo: userMessageLabel.topAnchor, constant: 30),
+        ]
+
         NSLayoutConstraint.activate(imageConstraints)
         NSLayoutConstraint.activate(nameConstraints)
         NSLayoutConstraint.activate(messageConstraints)
-//        NSLayoutConstraint.activate(timeConstraints)
-//        NSLayoutConstraint.activate(readConstraints)
+        NSLayoutConstraint.activate(timeConstraints)
     }
     
     required init?(coder: NSCoder) {
