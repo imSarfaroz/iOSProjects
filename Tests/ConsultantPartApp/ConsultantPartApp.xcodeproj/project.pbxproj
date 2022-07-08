@@ -13,6 +13,7 @@
 		A99A056B28755692008F05A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A99A056928755692008F05A0 /* Main.storyboard */; };
 		A99A056D28755693008F05A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A99A056C28755693008F05A0 /* Assets.xcassets */; };
 		A9B808E72876BC480057685B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B808E62876BC480057685B /* HeaderView.swift */; };
+		A9BC7B442877F9CF00786E27 /* ChatOperatorViewUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BC7B432877F9CF00786E27 /* ChatOperatorViewUITableViewCell.swift */; };
 		A9C59381287595B500233D13 /* ChatViewUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C59380287595B500233D13 /* ChatViewUITableViewCell.swift */; };
 		A9C5938428759F3500233D13 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9C5938328759F3500233D13 /* SDWebImageMapKit */; };
 		A9C593872875A61600233D13 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9C593862875A61600233D13 /* MessageKit */; };
@@ -27,6 +28,7 @@
 		A99A056C28755693008F05A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A99A057128755693008F05A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B808E62876BC480057685B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		A9BC7B432877F9CF00786E27 /* ChatOperatorViewUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOperatorViewUITableViewCell.swift; sourceTree = "<group>"; };
 		A9C59380287595B500233D13 /* ChatViewUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewUITableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 			children = (
 				A9C59380287595B500233D13 /* ChatViewUITableViewCell.swift */,
 				A9B808E62876BC480057685B /* HeaderView.swift */,
+				A9BC7B432877F9CF00786E27 /* ChatOperatorViewUITableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9BC7B442877F9CF00786E27 /* ChatOperatorViewUITableViewCell.swift in Sources */,
 				A9B808E72876BC480057685B /* HeaderView.swift in Sources */,
 				A99A056828755692008F05A0 /* ViewController.swift in Sources */,
 				A99A056428755692008F05A0 /* AppDelegate.swift in Sources */,

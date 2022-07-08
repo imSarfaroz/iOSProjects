@@ -8,9 +8,9 @@
 import UIKit
 import SDWebImage
 
-class MessageClientUITableViewCell: UITableViewCell {
+class MessageOperatorUITableViewCell: UITableViewCell {
     
-    static let identifier = "MessageClientUITableViewCell"
+    static let identifier = "MessageOperatorUITableViewCell"
     var indexx: Int!
     
     private let userImageView: UIImageView = {
@@ -18,19 +18,19 @@ class MessageClientUITableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 12
         imageView.tintColor = UIColor.white
-        imageView.backgroundColor = UIColor.systemGreen
+        imageView.backgroundColor = UIColor.red
         // need to be filled in module
         imageView.image = UIImage(systemName: "headphones")
-
+        
         return imageView
     }()
-
+    
     private let userTimeSentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 12, weight: .thin)
         label.text = "9:41 AM"
-
+        
         return label
     }()
     
@@ -38,7 +38,7 @@ class MessageClientUITableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 10, weight: .semibold)
-        label.text = "Jack"
+        label.text = "Jack eew"
         label.textColor = UIColor.systemBlue
         return label
     }()
@@ -48,9 +48,9 @@ class MessageClientUITableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = UIColor.black
-//        label.backgroundColor = .systemGray3
         label.text = "This library provides an async ..."
         return label
+        
     }()
     
     let backView: UIView = {
@@ -63,18 +63,18 @@ class MessageClientUITableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-       
+        
         contentView.addSubview(userImageView)
         contentView.addSubview(backView)
         backView.addSubview(userNameLabel)
         backView.addSubview(userMessageLabel)
-        contentView.addSubview(userTimeSentLabel)
+        backView.addSubview(userTimeSentLabel)
         
         contentView.translatesAutoresizingMaskIntoConstraints = true
         
         let imageConstraints = [
             userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 130),
+            userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             userImageView.widthAnchor.constraint(equalToConstant: 30),
             userImageView.heightAnchor.constraint(equalToConstant: 30),
         ]
@@ -94,21 +94,22 @@ class MessageClientUITableViewCell: UITableViewCell {
             userMessageLabel.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: 2),
             userMessageLabel.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: 2)
         ]
-        
+    
         let timeConstraints = [
-            userTimeSentLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 190),
-            userTimeSentLabel.topAnchor.constraint(equalTo: userMessageLabel.topAnchor, constant: 30),
+            userTimeSentLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 10),
+            userTimeSentLabel.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 140),
+            userTimeSentLabel.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: 2),
+            userTimeSentLabel.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: 2)
         ]
-        
-        NSLayoutConstraint.activate(imageConstraints)
         NSLayoutConstraint.activate(backViewConstraints)
+        NSLayoutConstraint.activate(imageConstraints)
         NSLayoutConstraint.activate(nameConstraints)
         NSLayoutConstraint.activate(messageConstraints)
         NSLayoutConstraint.activate(timeConstraints)
     }
     
     func configure(indexx: Int) {
-        userMessageLabel.text = "Hello dfsf df sf sdf s df sd f sd fs f sd f  sdfs \(indexx)"
+        userMessageLabel.text = "Hello \(indexx)"
     }
     
     required init?(coder: NSCoder) {
