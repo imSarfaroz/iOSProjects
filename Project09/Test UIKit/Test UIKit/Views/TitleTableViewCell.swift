@@ -9,7 +9,6 @@ import UIKit
 
 class TitleTableViewCell: UITableViewCell {
 
-
     static let identifier = "TitleTableViewCell"
     
     private let playTitleButton: UIButton = {
@@ -42,10 +41,8 @@ class TitleTableViewCell: UITableViewCell {
         contentView.addSubview(playTitleButton)
         
         applyConstraints()
-        
     }
-    
-    
+
     private func applyConstraints() {
         let titlesPosterUIImageViewConstraints = [
             titlesPosterUIImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -58,7 +55,7 @@ class TitleTableViewCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: titlesPosterUIImageView.trailingAnchor, constant: 20),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ]
-                
+        
         let playTitleButtonConstraints = [
             playTitleButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             playTitleButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
@@ -68,9 +65,7 @@ class TitleTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(titleLabelConstraints)
         NSLayoutConstraint.activate(playTitleButtonConstraints)
     }
-    
-    
-    
+     
     public func configure(with model: TitleViewModel) {
 
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterURL)") else {
@@ -79,8 +74,6 @@ class TitleTableViewCell: UITableViewCell {
         titlesPosterUIImageView.sd_setImage(with: url, completed: nil)
         titleLabel.text = model.titleName
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError()

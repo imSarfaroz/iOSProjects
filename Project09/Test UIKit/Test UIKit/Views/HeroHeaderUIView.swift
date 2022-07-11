@@ -9,7 +9,7 @@ import UIKit
 
 class HeroHeaderUIView: UIView {
     
-    private let DownloadButton: UIButton = {
+    private let downloadButton: UIButton = {
         let button = UIButton()
         button.setTitle("Download", for: .normal)
         button.layer.borderColor = UIColor.white.cgColor
@@ -19,8 +19,8 @@ class HeroHeaderUIView: UIView {
         return button
     }()
     
-    
     private let playButton: UIButton = {
+       
         let button = UIButton()
         button.setTitle("Play", for: .normal)
         button.layer.borderColor = UIColor.white.cgColor
@@ -30,11 +30,11 @@ class HeroHeaderUIView: UIView {
         return button
     }()
     
-    private let heroImageView: UIView = {
+    private let heroImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "headerImage")
+        imageView.image = UIImage(named: "heroImage")
         return imageView
     }()
     
@@ -47,35 +47,39 @@ class HeroHeaderUIView: UIView {
         gradientLayer.frame = bounds
         layer.addSublayer(gradientLayer)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(heroImageView)
         addGradient()
         addSubview(playButton)
-        addSubview(DownloadButton)
-        applyContraints()
+        addSubview(downloadButton)
+        applyConstraints()
     }
-    
-    private func applyContraints() {
+    private func applyConstraints() {
+        
         let playButtonConstraints = [
-            // for English speaking people  (from right to left) for Arabic speaking people (from left to right)
-            playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 90),
+            playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
             playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
-            playButton.widthAnchor.constraint(equalToConstant: 100)
+            playButton.widthAnchor.constraint(equalToConstant: 120)
+        ]
+        
+        let downloadButtonConstraints = [
+            downloadButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
+            downloadButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
+            downloadButton.widthAnchor.constraint(equalToConstant: 120)
         ]
         
         NSLayoutConstraint.activate(playButtonConstraints)
-    
-        let DownloadButtonConstraints = [
-            // for English speaking people  (from right to left) for Arabic speaking people (from left to right)
-            DownloadButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -90),
-            DownloadButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
-            DownloadButton.widthAnchor.constraint(equalToConstant: 100)
-        ]
+        NSLayoutConstraint.activate(downloadButtonConstraints)
+    }
+
+    public func configure(with model: TitleViewModel) {
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(model.posterURL)") else {
+            return
+        }
         
-        NSLayoutConstraint.activate(DownloadButtonConstraints)
-        
+        heroImageView.sd_setImage(with: url, completed: nil)
     }
     
     override func layoutSubviews() {
@@ -86,4 +90,5 @@ class HeroHeaderUIView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
 }

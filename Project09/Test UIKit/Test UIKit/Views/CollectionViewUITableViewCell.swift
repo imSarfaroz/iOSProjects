@@ -1,30 +1,25 @@
 //
-//  CollectionViewUITableViewCell.swift
+//  YoutubeSearchResponce.swift
 //  Test UIKit
 //
-//  Created by Sarfaroz on 7/1/22.
+//  Created by Sarfaroz on 7/11/22.
 //
-
 import UIKit
-import MapKit
 
-protocol CollectionViewUITableViewCellDelegate: AnyObject {
-    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewUITableViewCell, viewModel: TitlePreviewViewModel)
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel)
 }
 
-class CollectionViewUITableViewCell: UITableViewCell {
-    
+class CollectionViewTableViewCell: UITableViewCell {
+
     static let identifier = "CollectionViewTableViewCell"
-    
-    weak var delegete: CollectionViewUITableViewCellDelegate?
-    
+    weak var delegate: CollectionViewTableViewCellDelegate?
     private var titles: [Title] = [Title]()
+    
     private let collectionView: UICollectionView = {
-        
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 140, height: 200)
         layout.scrollDirection = .horizontal
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
         return collectionView
@@ -32,13 +27,12 @@ class CollectionViewUITableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.backgroundColor = .systemPink
         contentView.addSubview(collectionView)
         
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError()
@@ -51,29 +45,42 @@ class CollectionViewUITableViewCell: UITableViewCell {
     
     public func configure(with titles: [Title]) {
         self.titles = titles
-        DispatchQueue.main.async {
-            [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
+        }
+    }
+    
+    private func downloadTitleAt(indexPath: IndexPath) {
+        
+        DataPersistenceManager.shared.downloadTitleWith(model: titles[indexPath.row]) { result in
+            switch result {
+            case .success():
+                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }
 
-extension CollectionViewUITableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return titles.count
-    }
+@available(iOS 15.0, *)
+extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.identifier, for: indexPath) as?
-                TitleCollectionViewCell else{
-                    return UICollectionViewCell()
-                }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TitleCollectionViewCell.identifier, for: indexPath) as? TitleCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
         guard let model = titles[indexPath.row].poster_path else {
             return UICollectionViewCell()
         }
         cell.configure(with: model)
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return titles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -83,9 +90,11 @@ extension CollectionViewUITableViewCell: UICollectionViewDelegate, UICollectionV
         guard let titleName = title.original_title ?? title.original_name else {
             return
         }
-        APICaller.shared.getMovie(with: titleName + " trailor") { [weak self] result in
+
+        APICaller.shared.getMovie(with: titleName + " trailer") { [weak self] result in
             switch result {
             case .success(let videoElement):
+                
                 let title = self?.titles[indexPath.row]
                 guard let titleOverview = title?.overview else {
                     return
@@ -93,13 +102,26 @@ extension CollectionViewUITableViewCell: UICollectionViewDelegate, UICollectionV
                 guard let strongSelf = self else {
                     return
                 }
-                let viewModel = TitlePreviewViewModel(title: titleName, youtubeView: videoElement, titleOverView: titleOverview)
-                self?.delegete?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
-                print(videoElement.id)
+                let viewModel = TitlePreviewViewModel(title: titleName, youtubeView: videoElement, titleOverview: titleOverview)
+                self?.delegate?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        let config = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) {[weak self] _ in
+                let downloadAction = UIAction(title: "Download", subtitle: nil, image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
+                    self?.downloadTitleAt(indexPath: indexPath)
+                }
+                return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [downloadAction])
+            }
+        return config
+    }
 }
-

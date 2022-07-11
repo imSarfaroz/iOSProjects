@@ -9,66 +9,74 @@ import UIKit
 
 enum Sections: Int {
     case TrendingMovies = 0
-    case TrandingTV = 1
+    case TrendingTv = 1
     case Popular = 2
-    case TopRated = 3
-    case UpcomingMovies = 4
+    case Upcoming = 3
+    case TopRated = 4
 }
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController  {
+
+    private var randomTrendingMovie: Title?
+    private var headerView: HeroHeaderUIView?
     
-    let sectionTitles:[String] = ["Trending Movies", "Trending TV", "Popular", "Top Rated", "Upcoming Movies"]
+    let sectionTitles: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top rated"]
     
     private let homeFeedTable: UITableView = {
-        // groups as adding headers, footer as etc.
         let table = UITableView(frame: .zero, style: .grouped)
-        table.register(CollectionViewUITableViewCell.self, forCellReuseIdentifier: CollectionViewUITableViewCell.identifier)
-        
+        table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
         return table
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
         view.addSubview(homeFeedTable)
-        
-        // Two protocols so our viewTable could work properly
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
         
         configureNavbar()
         
-        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
         homeFeedTable.tableHeaderView = headerView
-        
-        // pushed the controller on the mainNavigationController
-        //navigationController?.pushViewController(TitlePreviewViewController(), animated: true)
+        configureHeroHeaderView()
         
     }
     
-    func configureNavbar() {
-        var image = UIImage(named:"netflixLogo")
+    private func configureHeroHeaderView() {
+
+        APICaller.shared.getTrendingMovies { [weak self] result in
+            switch result {
+            case .success(let titles):
+                let selectedTitle = titles.randomElement()
+                
+                self?.randomTrendingMovie = selectedTitle
+                self?.headerView?.configure(with: TitleViewModel(titleName: selectedTitle?.original_title ?? "", posterURL: selectedTitle?.poster_path ?? ""))
+                
+            case .failure(let erorr):
+                print(erorr.localizedDescription)
+            }
+        }
+    }
+    private func configureNavbar() {
+        var image = UIImage(named: "netflixLogo")
         image = image?.withRenderingMode(.alwaysOriginal)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "film"), style: .done, target: self, action: nil)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         ]
-        
         navigationController?.navigationBar.tintColor = .white
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         homeFeedTable.frame = view.bounds
     }
 }
 
-// The number of rows in a cell
-extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitles.count
@@ -79,17 +87,44 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewUITableViewCell.identifier, for: indexPath)
-                as? CollectionViewUITableViewCell else {
-                    return UITableViewCell()
-                }
-    
-        cell.delegete = self
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.delegate = self
         switch indexPath.section {
-            
         case Sections.TrendingMovies.rawValue:
+            APICaller.shared.getTrendingMovies { result in
+                switch result {
+                    
+                case .success(let titles):
+                    cell.configure(with: titles)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
             
-            APICaller.shared.getTrendingMoview { result in
+        case Sections.TrendingTv.rawValue:
+            APICaller.shared.getTrendingTvs { result in
+                switch result {
+                case .success(let titles):
+                    cell.configure(with: titles)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        case Sections.Popular.rawValue:
+            APICaller.shared.getPopular { result in
+                switch result {
+                case .success(let titles):
+                    cell.configure(with: titles)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        case Sections.Upcoming.rawValue:
+            
+            APICaller.shared.getUpcomingMovies { result in
                 switch result {
                 case .success(let titles):
                     cell.configure(with: titles)
@@ -98,41 +133,8 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-        case Sections.TrandingTV.rawValue:
-            
-                  APICaller.shared.getTrendingTvs { result in
-                      switch result {
-                      case .success(let titles):
-                          cell.configure(with: titles)
-                      case .failure(let error):
-                          print(error.localizedDescription)
-                      }
-                  }
-            
-        case Sections.UpcomingMovies.rawValue:
-                   
-            APICaller.shared.getUpcomingMovies { result in
-                       switch result {
-                       case .success(let titles):
-                           cell.configure(with: titles)
-                       case .failure(let error):
-                           print(error.localizedDescription)
-                       }
-                   }
-                   
-            
-        case Sections.Popular.rawValue:
-                APICaller.shared.getPopularMovies { result in
-                       switch result {
-                       case .success(let titles):
-                           cell.configure(with: titles)
-                       case .failure(let error):
-                           print(error.localizedDescription)
-                       }
-                   }
-        
         case Sections.TopRated.rawValue:
-            APICaller.shared.getTopRatedMovies { result in
+            APICaller.shared.getTopRated { result in
                 switch result {
                 case .success(let titles):
                     cell.configure(with: titles)
@@ -140,35 +142,30 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
                     print(error)
                 }
             }
-            
         default:
             return UITableViewCell()
         }
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else {return}
         header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100,
-                                         height: header.bounds.height)
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
         header.textLabel?.textColor = .white
         header.textLabel?.text = header.textLabel?.text?.capitalizeFirstLetter()
-        
-        header.textLabel?.textColor = .white
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionTitles[section]
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -179,8 +176,8 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension HomeViewController: CollectionViewUITableViewCellDelegate{
-    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewUITableViewCell, viewModel: TitlePreviewViewModel) {
+extension HomeViewController: CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: TitlePreviewViewModel) {
         DispatchQueue.main.async { [weak self] in
             let vc = TitlePreviewViewController()
             vc.configure(with: viewModel)
@@ -188,6 +185,3 @@ extension HomeViewController: CollectionViewUITableViewCellDelegate{
         }
     }
 }
-
-// API address for free moview access!
-// dc381316c407b0487fc5cef07e718023

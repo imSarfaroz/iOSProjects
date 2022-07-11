@@ -12,5 +12,3 @@ extension String {
         return self.prefix(1).uppercased() + self.lowercased().dropFirst()
     }
 }
-
- 
