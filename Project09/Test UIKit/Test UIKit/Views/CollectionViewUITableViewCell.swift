@@ -8,12 +8,17 @@
 import UIKit
 import MapKit
 
+protocol CollectionViewUITableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewUITableViewCell, viewModel: TitlePreviewViewModel)
+}
+
 class CollectionViewUITableViewCell: UITableViewCell {
     
     static let identifier = "CollectionViewTableViewCell"
     
-    private var titles: [Title] = [Title]()
+    weak var delegete: CollectionViewUITableViewCellDelegate?
     
+    private var titles: [Title] = [Title]()
     private let collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -78,9 +83,18 @@ extension CollectionViewUITableViewCell: UICollectionViewDelegate, UICollectionV
         guard let titleName = title.original_title ?? title.original_name else {
             return
         }
-        APICaller.shared.getMovie(with: titleName + " trailor") { result in
+        APICaller.shared.getMovie(with: titleName + " trailor") { [weak self] result in
             switch result {
             case .success(let videoElement):
+                let title = self?.titles[indexPath.row]
+                guard let titleOverview = title?.overview else {
+                    return
+                }
+                guard let strongSelf = self else {
+                    return
+                }
+                let viewModel = TitlePreviewViewModel(title: titleName, youtubeView: videoElement, titleOverView: titleOverview)
+                self?.delegete?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
                 print(videoElement.id)
             case .failure(let error):
                 print(error.localizedDescription)

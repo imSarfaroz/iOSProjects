@@ -41,9 +41,9 @@ class HomeViewController: UIViewController {
         let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
         homeFeedTable.tableHeaderView = headerView
         
-        APICaller.shared.getMovie(with: "Harry Potter") {result in
-            //
-        }
+        // pushed the controller on the mainNavigationController
+        //navigationController?.pushViewController(TitlePreviewViewController(), animated: true)
+        
     }
     
     func configureNavbar() {
@@ -83,7 +83,8 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
                 as? CollectionViewUITableViewCell else {
                     return UITableViewCell()
                 }
-        
+    
+        cell.delegete = self
         switch indexPath.section {
             
         case Sections.TrendingMovies.rawValue:
@@ -178,6 +179,15 @@ extension HomeViewController:UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension HomeViewController: CollectionViewUITableViewCellDelegate{
+    func collectionViewTableViewCellDidTapCell(_ cell: CollectionViewUITableViewCell, viewModel: TitlePreviewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            let vc = TitlePreviewViewController()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}
 
 // API address for free moview access!
 // dc381316c407b0487fc5cef07e718023
