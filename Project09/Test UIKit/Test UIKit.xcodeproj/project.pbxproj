@@ -26,6 +26,7 @@
 		A9DC44C9286EC09400DD7563 /* DownLoadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC44C8286EC09400DD7563 /* DownLoadsViewController.swift */; };
 		A9DC44D0286EC7B400DD7563 /* CollectionViewUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC44CF286EC7B400DD7563 /* CollectionViewUITableViewCell.swift */; };
 		A9DC44D2286ED42D00DD7563 /* HeroHeaderUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC44D1286ED42D00DD7563 /* HeroHeaderUIView.swift */; };
+		A9DC8F8E287BEF8700B4488A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC8F8D287BEF8700B4488A /* SearchResultsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		A9DC44C8286EC09400DD7563 /* DownLoadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownLoadsViewController.swift; sourceTree = "<group>"; };
 		A9DC44CF286EC7B400DD7563 /* CollectionViewUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewUITableViewCell.swift; sourceTree = "<group>"; };
 		A9DC44D1286ED42D00DD7563 /* HeroHeaderUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderUIView.swift; sourceTree = "<group>"; };
+		A9DC8F8D287BEF8700B4488A /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +103,8 @@
 		A9DC44C0286EBFE000DD7563 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A9DC44C1286EC02500DD7563 /* HomeViewController.swift */,
-				A9DC44C4286EC06000DD7563 /* UpComingViewController.swift */,
-				A9DC44C6286EC07900DD7563 /* SearchViewController.swift */,
-				A9DC44C8286EC09400DD7563 /* DownLoadsViewController.swift */,
+				A9DC8F90287BEFB800B4488A /* General */,
+				A9DC8F8F287BEFA200B4488A /* Core */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -150,6 +150,25 @@
 				A986750828701386000177CF /* APICaller.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		A9DC8F8F287BEFA200B4488A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A9DC44C1286EC02500DD7563 /* HomeViewController.swift */,
+				A9DC44C4286EC06000DD7563 /* UpComingViewController.swift */,
+				A9DC44C6286EC07900DD7563 /* SearchViewController.swift */,
+				A9DC44C8286EC09400DD7563 /* DownLoadsViewController.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A9DC8F90287BEFB800B4488A /* General */ = {
+			isa = PBXGroup;
+			children = (
+				A9DC8F8D287BEF8700B4488A /* SearchResultsViewController.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +257,7 @@
 				A9DC44C5286EC06000DD7563 /* UpComingViewController.swift in Sources */,
 				A986751128703491000177CF /* TitleCollectionViewCell.swift in Sources */,
 				A9DC44C9286EC09400DD7563 /* DownLoadsViewController.swift in Sources */,
+				A9DC8F8E287BEF8700B4488A /* SearchResultsViewController.swift in Sources */,
 				A986750D28701FCC000177CF /* Extensions.swift in Sources */,
 				A9DC44AF286EB6B700DD7563 /* SceneDelegate.swift in Sources */,
 				A9DC44D0286EC7B400DD7563 /* CollectionViewUITableViewCell.swift in Sources */,

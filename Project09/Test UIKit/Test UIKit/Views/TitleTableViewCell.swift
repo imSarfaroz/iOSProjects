@@ -5,15 +5,12 @@
 //  Created by Sarfaroz on 7/7/22.
 //
 
-
 import UIKit
 
 class TitleTableViewCell: UITableViewCell {
 
 
     static let identifier = "TitleTableViewCell"
-    
-    
     
     private let playTitleButton: UIButton = {
         let button = UIButton()
@@ -56,7 +53,6 @@ class TitleTableViewCell: UITableViewCell {
             titlesPosterUIImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             titlesPosterUIImageView.widthAnchor.constraint(equalToConstant: 100)
         ]
-        
         
         let titleLabelConstraints = [
             titleLabel.leadingAnchor.constraint(equalTo: titlesPosterUIImageView.trailingAnchor, constant: 20),
