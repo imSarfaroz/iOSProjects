@@ -13,6 +13,7 @@
 		A9315A22287D5A20009D0535 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9315A21287D5A20009D0535 /* Assets.xcassets */; };
 		A9315A25287D5A20009D0535 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9315A23287D5A20009D0535 /* LaunchScreen.storyboard */; };
 		A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */; };
+		A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F3AFA287E971A0013A70E /* MenuListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A9315A24287D5A20009D0535 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9315A26287D5A20009D0535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDescriptionViewController.swift; sourceTree = "<group>"; };
+		A93F3AFA287E971A0013A70E /* MenuListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		A9315A17287D5A1F009D0535 /* Farhang */ = {
 			isa = PBXGroup;
 			children = (
+				A93F3AF9287E96310013A70E /* View */,
 				A9315A2C287D7586009D0535 /* Controllers */,
 				A9315A18287D5A1F009D0535 /* AppDelegate.swift */,
 				A9315A1A287D5A1F009D0535 /* SceneDelegate.swift */,
@@ -73,6 +76,14 @@
 				A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A93F3AF9287E96310013A70E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A93F3AFA287E971A0013A70E /* MenuListView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +130,9 @@
 				Base,
 			);
 			mainGroup = A9315A0C287D5A1F009D0535;
+			packageReferences = (
+				A93F3AF7287E8FCC0013A70E /* XCRemoteSwiftPackageReference "DropDown" */,
+			);
 			productRefGroup = A9315A16287D5A1F009D0535 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9315A1D287D5A1F009D0535 /* MainViewController.swift in Sources */,
+				A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */,
 				A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */,
 				A9315A19287D5A1F009D0535 /* AppDelegate.swift in Sources */,
 				A9315A1B287D5A1F009D0535 /* SceneDelegate.swift in Sources */,
@@ -297,7 +312,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,7 +341,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -362,6 +377,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A93F3AF7287E8FCC0013A70E /* XCRemoteSwiftPackageReference "DropDown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AssistoLab/DropDown.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = A9315A0D287D5A1F009D0535 /* Project object */;
 }
