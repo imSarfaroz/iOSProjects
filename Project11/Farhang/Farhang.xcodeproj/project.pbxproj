@@ -14,6 +14,7 @@
 		A9315A25287D5A20009D0535 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9315A23287D5A20009D0535 /* LaunchScreen.storyboard */; };
 		A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */; };
 		A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F3AFA287E971A0013A70E /* MenuListView.swift */; };
+		A93F3AFD287EDA1C0013A70E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F3AFC287EDA1C0013A70E /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		A9315A26287D5A20009D0535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDescriptionViewController.swift; sourceTree = "<group>"; };
 		A93F3AFA287E971A0013A70E /* MenuListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuListView.swift; sourceTree = "<group>"; };
+		A93F3AFC287EDA1C0013A70E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Farhang/View/SettingsView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		A93F3AF9287E96310013A70E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A93F3AFC287EDA1C0013A70E /* SettingsView.swift */,
 				A93F3AFA287E971A0013A70E /* MenuListView.swift */,
 			);
 			path = View;
@@ -162,6 +165,7 @@
 				A9315A1D287D5A1F009D0535 /* MainViewController.swift in Sources */,
 				A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */,
 				A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */,
+				A93F3AFD287EDA1C0013A70E /* SettingsView.swift in Sources */,
 				A9315A19287D5A1F009D0535 /* AppDelegate.swift in Sources */,
 				A9315A1B287D5A1F009D0535 /* SceneDelegate.swift in Sources */,
 			);
