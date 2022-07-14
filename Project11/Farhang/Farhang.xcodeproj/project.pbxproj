@@ -15,6 +15,9 @@
 		A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */; };
 		A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F3AFA287E971A0013A70E /* MenuListView.swift */; };
 		A93F3AFD287EDA1C0013A70E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F3AFC287EDA1C0013A70E /* SettingsView.swift */; };
+		A982F784287FEDD200FBBDE0 /* AppDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F783287FEDD200FBBDE0 /* AppDescriptionViewController.swift */; };
+		A982F786287FEEB000FBBDE0 /* SearchHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */; };
+		A982F7882880161300FBBDE0 /* DescriptionUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDescriptionViewController.swift; sourceTree = "<group>"; };
 		A93F3AFA287E971A0013A70E /* MenuListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuListView.swift; sourceTree = "<group>"; };
 		A93F3AFC287EDA1C0013A70E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Farhang/View/SettingsView.swift; sourceTree = SOURCE_ROOT; };
+		A982F783287FEDD200FBBDE0 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
+		A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewController.swift; sourceTree = "<group>"; };
+		A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionUITableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,8 @@
 			children = (
 				A9315A1C287D5A1F009D0535 /* MainViewController.swift */,
 				A9315A2D287D8E19009D0535 /* WordDescriptionViewController.swift */,
+				A982F783287FEDD200FBBDE0 /* AppDescriptionViewController.swift */,
+				A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -85,6 +93,7 @@
 			children = (
 				A93F3AFC287EDA1C0013A70E /* SettingsView.swift */,
 				A93F3AFA287E971A0013A70E /* MenuListView.swift */,
+				A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +172,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9315A1D287D5A1F009D0535 /* MainViewController.swift in Sources */,
+				A982F786287FEEB000FBBDE0 /* SearchHistoryViewController.swift in Sources */,
+				A982F784287FEDD200FBBDE0 /* AppDescriptionViewController.swift in Sources */,
+				A982F7882880161300FBBDE0 /* DescriptionUITableViewCell.swift in Sources */,
 				A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */,
 				A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */,
 				A93F3AFD287EDA1C0013A70E /* SettingsView.swift in Sources */,

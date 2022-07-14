@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsView: UIView {
     
-    private let textLabel1: UILabel = {
+    public let textLabel1: UILabel = {
         let textLabel1 = UILabel()
         textLabel1.text = "  Таърихи Ҷустуҷӯ"
         textLabel1.textColor = .black
@@ -24,7 +24,7 @@ class SettingsView: UIView {
         return textLabel1
     }()
     
-    private let textLabel2: UILabel = {
+    public let textLabel2: UILabel = {
         let textLabel2 = UILabel()
         textLabel2.text = "  Дар Бораи Барнома"
         textLabel2.clipsToBounds = true
@@ -48,13 +48,13 @@ class SettingsView: UIView {
     
     private func applyConstraints() {
         let text1 = [
-            textLabel1.widthAnchor.constraint(equalToConstant: 200),
+            textLabel1.widthAnchor.constraint(equalToConstant: 180),
             textLabel1.heightAnchor.constraint(equalToConstant: 45),
         ]
         
         let text2 = [
             textLabel2.topAnchor.constraint(equalTo: textLabel1.bottomAnchor),
-            textLabel2.widthAnchor.constraint(equalToConstant: 200),
+            textLabel2.widthAnchor.constraint(equalToConstant: 180),
             textLabel2.heightAnchor.constraint(equalToConstant: 45),
         ]
         

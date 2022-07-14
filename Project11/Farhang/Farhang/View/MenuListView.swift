@@ -25,7 +25,7 @@ class MenuListView: UIView {
         return textLabel1
     }()
     
-    private let textLabel2: UILabel = {
+    public let textLabel2: UILabel = {
         let textLabel2 = UILabel()
         textLabel2.text = "  Тоҷики-Руси"
         textLabel2.textColor = .black
@@ -39,7 +39,7 @@ class MenuListView: UIView {
         return textLabel2
     }()
     
-    private let textLabel3: UILabel = {
+    public let textLabel3: UILabel = {
         let textLabel3 = UILabel()
         textLabel3.text = "  Тоҷики-Тоҷики"
         textLabel3.clipsToBounds = true

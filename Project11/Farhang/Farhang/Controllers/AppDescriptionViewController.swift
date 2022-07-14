@@ -7,19 +7,20 @@
 
 import UIKit
 
-class WordDescriptionViewController: UIViewController {
+class AppDescriptionViewController: UIViewController {
     
     private let wordLabel: UILabel = {
        let wordLabel = UILabel()
-        wordLabel.text = "Sample Text"
+        wordLabel.text = "Дар Бораи Барнома"
+        wordLabel.font = UIFont(name: "HelveticaNeue", size: 20)
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
     }()
     
     private let wordDescriptionLabel: UILabel = {
        let wordLabel = UILabel()
-        wordLabel.text = "Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text"
-        wordLabel.numberOfLines = 0;
+        wordLabel.text = "This is a lable for an app Description This is a lable for an app Description This is a lable for an app Description This is a lable for an app Description This is a lable for an app Description"
+        wordLabel.numberOfLines = 0
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
     }()
@@ -35,6 +36,8 @@ class WordDescriptionViewController: UIViewController {
         configureNavbar()
     }
     
+    
+    
     func configureNavbar() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info"),
@@ -48,6 +51,7 @@ class WordDescriptionViewController: UIViewController {
         let wordText = [
             wordLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/8),
             wordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            wordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.widthAnchor/2)
         ]
         
         let descriptionText = [

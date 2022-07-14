@@ -7,15 +7,14 @@
 
 import UIKit
 
-public var titleName:String = "Руси-Тоҷики"
-
 class MainViewController: UIViewController, UISearchResultsUpdating {
     
     var isMenuOpened:Bool = false
+    var isSettingsOpened:Bool = false
     
     private let discoverTable: UITableView = {
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: DescriptionUITableViewCell.identifies)
         return table
     }()
     
@@ -40,44 +39,96 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
         return view
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.title = titleName
+        navigationItem.title = changeTheTitleName("Руси-Тоҷики")
         view.addSubview(discoverTable)
         discoverTable.delegate = self
         discoverTable.dataSource = self
         
-        //        view.addSubview(menuListView)
-        //        view.addSubview((settingsListView))
-//        navigationController?.view.addSubview(menuListView)
-        navigationController?.view.addSubview(settingsListView)
         navigationItem.searchController = searchController
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchResultsUpdater = self
         
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
-//        menuListView.addGestureRecognizer(tap)
+        // TAP Gestures
+        let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
+        tapGestureLabel1.numberOfTapsRequired = 1
+        menuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
         
-            // TAP Gesture
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myviewTapped(_:)))
-            tapGesture.numberOfTapsRequired = 1
-            menuListView.addGestureRecognizer(tapGesture)
-            menuListView.isUserInteractionEnabled = true
+        let tapGestureLabel2 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.mySecondLabelViewTapped(_:)))
+        tapGestureLabel2.numberOfTapsRequired = 1
+        menuListView.textLabel2.addGestureRecognizer(tapGestureLabel2)
+        
+        let tapGesture3 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myThirdLabelViewTapped(_:)))
+        tapGesture3.numberOfTapsRequired = 1
+        menuListView.textLabel3.addGestureRecognizer(tapGesture3)
+        
+        let tapGestureSettingsLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstSettingsLabelViewTapped(_:)))
+        tapGestureSettingsLabel1.numberOfTapsRequired = 1
+        settingsListView.textLabel1.addGestureRecognizer(tapGestureSettingsLabel1)
+        
+        let tapGestureSettingsLabel2 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.mySecondSettingsLabelViewTapped(_:)))
+        tapGestureSettingsLabel2.numberOfTapsRequired = 1
+        settingsListView.textLabel2.addGestureRecognizer(tapGestureSettingsLabel2)
         
         configureNavbar()
     }
     
-    @objc func myviewTapped(_ sender: UITapGestureRecognizer) {
-
-        print("tap working")
+    @objc func myFirstLabelViewTapped(_ sender: UITapGestureRecognizer) {
+        print("tap 1st label working")
+        navigationItem.title = changeTheTitleName(menuListView.textLabel1.text!)
+        menuListView.isHidden = true
+        isMenuOpened = false
+        
+        view.isUserInteractionEnabled = true
+        searchController.searchBar.isUserInteractionEnabled = true
     }
     
-    @objc func tapFunction(sender:UITapGestureRecognizer) {
-        print("tap working")
+    @objc func mySecondLabelViewTapped(_ sender: UITapGestureRecognizer) {
+        
+        print("tap 2nd label working")
+        //        changeTheTitleName(menuListView.textLabel2.text!)
+        navigationItem.title = changeTheTitleName(menuListView.textLabel2.text!)
+        menuListView.isHidden = true
+        isMenuOpened = false
+        
+        view.isUserInteractionEnabled = true
+        searchController.searchBar.isUserInteractionEnabled = true
+    }
+    
+    @objc func myThirdLabelViewTapped(_ sender: UITapGestureRecognizer) {
+        print("tap 3rd label working")
+        navigationItem.title = changeTheTitleName(menuListView.textLabel3.text!)
+        menuListView.isHidden = true
+        isMenuOpened = false
+        
+        view.isUserInteractionEnabled = true
+        searchController.searchBar.isUserInteractionEnabled = true
+    }
+    
+    @objc func myFirstSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
+        print("tap 1st Setigns label working")
+        let searchHistoryViewController = SearchHistoryViewController()
+        self.navigationController?.pushViewController(searchHistoryViewController, animated: true)
+        settingsListView.isHidden = true
+        isSettingsOpened = false
+        
+        view.isUserInteractionEnabled = true
+        searchController.searchBar.isUserInteractionEnabled = true
+    }
+    
+    @objc func mySecondSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
+        print("tap 2nd Setigns label working")
+        let appDescriptionViewController = AppDescriptionViewController()
+        self.navigationController?.pushViewController(appDescriptionViewController, animated: true)
+        settingsListView.isHidden = true
+        isSettingsOpened = false
+        
+        view.isUserInteractionEnabled = true
+        searchController.searchBar.isUserInteractionEnabled = true
     }
     
     func changeTheTitleName(_ title: String) -> String {
@@ -104,43 +155,49 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
     
     @objc
     func rightHandAction() {
-        view.addSubview(settingsListView)
-        settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        settingsListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 200).isActive = true
+        navigationController?.view.addSubview(settingsListView)
+        //view.addSubview(settingsListView)
+        settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
+        settingsListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 2.3).isActive = true
         settingsListView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        settingsListView.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        settingsListView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         print("right bar button action")
         if(isMenuOpened == false) {
-            settingsListView.isHidden = false
-            isMenuOpened = true
-            view.isUserInteractionEnabled = false
-            searchController.searchBar.isUserInteractionEnabled = false
-        } else if(isMenuOpened == true) {
-            settingsListView.isHidden = true
-            isMenuOpened = false
-            view.isUserInteractionEnabled = true
-            searchController.searchBar.isUserInteractionEnabled = true
+            if(isSettingsOpened == false) {
+                settingsListView.isHidden = false
+                isSettingsOpened = true
+                view.isUserInteractionEnabled = false
+                searchController.searchBar.isUserInteractionEnabled = false
+            } else if(isSettingsOpened == true) {
+                settingsListView.isHidden = true
+                isSettingsOpened = false
+                view.isUserInteractionEnabled = true
+                searchController.searchBar.isUserInteractionEnabled = true
+            }
         }
     }
     
     @objc
     func leftHandAction() {
-        view.addSubview(menuListView)
-        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        navigationController?.view.addSubview(menuListView)
+        //view.addSubview(menuListView)
+        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
+        menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 12).isActive = true
         menuListView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         menuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
         print("left bar button action")
-        if(isMenuOpened == false) {
-            menuListView.isHidden = false
-            isMenuOpened = true
-//            view.isUserInteractionEnabled = false
-//            searchController.searchBar.isUserInteractionEnabled = false
-        } else if(isMenuOpened == true) {
-            menuListView.isHidden = true
-            isMenuOpened = false
-//            view.isUserInteractionEnabled = true
-//            searchController.searchBar.isUserInteractionEnabled = true
+        if(isSettingsOpened == false) {
+            if(isMenuOpened == false) {
+                menuListView.isHidden = false
+                isMenuOpened = true
+                view.isUserInteractionEnabled = false
+                searchController.searchBar.isUserInteractionEnabled = false
+            } else if(isMenuOpened == true) {
+                menuListView.isHidden = true
+                isMenuOpened = false
+                view.isUserInteractionEnabled = true
+                searchController.searchBar.isUserInteractionEnabled = true
+            }
         }
     }
     
@@ -157,8 +214,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "text sample"
+        let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath)
         return cell
     }
     
@@ -170,4 +226,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         let wordDescriptionViewController = WordDescriptionViewController()
         self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
     }
+    
+    
 }
