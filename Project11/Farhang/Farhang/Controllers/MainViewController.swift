@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import SQLite
 
 class MainViewController: UIViewController, UISearchResultsUpdating {
     
     var isMenuOpened:Bool = false
     var isSettingsOpened:Bool = false
+    
+    var db = DBHelper()
+    var emps = Array<Dictionary>()
     
     private let discoverTable: UITableView = {
         let table = UITableView()
@@ -42,7 +46,6 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.title = changeTheTitleName("Руси-Тоҷики")
         view.addSubview(discoverTable)
@@ -53,7 +56,13 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchResultsUpdater = self
         
-        // TAP Gestures
+        SQLiteCommands.createTable()
+        SQLiteCommands.insertRow(Dictionary(id: 1, word: "MIKE", description: "Old"))
+        SQLiteCommands.insertRow(Dictionary(id: 2, word: "MIKE", description: "Old"))
+        SQLiteCommands.insertRow(Dictionary(id: 3, word: "MIKE", description: "Old"))
+        emps = SQLiteCommands.presentRows()!
+        
+        // TAP Gestures"
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
         tapGestureLabel1.numberOfTapsRequired = 1
         menuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
@@ -210,11 +219,13 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return emps.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath)
+        cell.textLabel?.text = "Id: " + "\(emps[indexPath.row].id)" + ", Name: " + emps[indexPath.row].word + " description" + emps[indexPath.row].description
+        
         return cell
     }
     

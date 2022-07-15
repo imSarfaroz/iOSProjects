@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A923623828812A64001CAC48 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923623728812A64001CAC48 /* DBHelper.swift */; };
+		A923623A28813A01001CAC48 /* SQLiteCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923623928813A01001CAC48 /* SQLiteCommands.swift */; };
+		A923623C28814268001CAC48 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923623B28814268001CAC48 /* Dictionary.swift */; };
 		A9315A19287D5A1F009D0535 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9315A18287D5A1F009D0535 /* AppDelegate.swift */; };
 		A9315A1B287D5A1F009D0535 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9315A1A287D5A1F009D0535 /* SceneDelegate.swift */; };
 		A9315A1D287D5A1F009D0535 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9315A1C287D5A1F009D0535 /* MainViewController.swift */; };
@@ -18,9 +21,13 @@
 		A982F784287FEDD200FBBDE0 /* AppDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F783287FEDD200FBBDE0 /* AppDescriptionViewController.swift */; };
 		A982F786287FEEB000FBBDE0 /* SearchHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */; };
 		A982F7882880161300FBBDE0 /* DescriptionUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */; };
+		A982F78D28802B8400FBBDE0 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = A982F78C28802B8400FBBDE0 /* SQLite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A923623728812A64001CAC48 /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
+		A923623928813A01001CAC48 /* SQLiteCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteCommands.swift; sourceTree = "<group>"; };
+		A923623B28814268001CAC48 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		A9315A15287D5A1F009D0535 /* Farhang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Farhang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9315A18287D5A1F009D0535 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9315A1A287D5A1F009D0535 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,12 +48,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A982F78D28802B8400FBBDE0 /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A923623D2881427B001CAC48 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A923623B28814268001CAC48 /* Dictionary.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A9315A0C287D5A1F009D0535 = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +82,8 @@
 		A9315A17287D5A1F009D0535 /* Farhang */ = {
 			isa = PBXGroup;
 			children = (
+				A923623D2881427B001CAC48 /* Model */,
+				A982F78E28804E9C00FBBDE0 /* Database */,
 				A93F3AF9287E96310013A70E /* View */,
 				A9315A2C287D7586009D0535 /* Controllers */,
 				A9315A18287D5A1F009D0535 /* AppDelegate.swift */,
@@ -98,6 +116,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A982F78E28804E9C00FBBDE0 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				A923623728812A64001CAC48 /* DBHelper.swift */,
+				A923623928813A01001CAC48 /* SQLiteCommands.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -114,6 +141,9 @@
 			dependencies = (
 			);
 			name = Farhang;
+			packageProductDependencies = (
+				A982F78C28802B8400FBBDE0 /* SQLite */,
+			);
 			productName = Farhang;
 			productReference = A9315A15287D5A1F009D0535 /* Farhang.app */;
 			productType = "com.apple.product-type.application";
@@ -143,7 +173,7 @@
 			);
 			mainGroup = A9315A0C287D5A1F009D0535;
 			packageReferences = (
-				A93F3AF7287E8FCC0013A70E /* XCRemoteSwiftPackageReference "DropDown" */,
+				A982F78B28802B8400FBBDE0 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = A9315A16287D5A1F009D0535 /* Products */;
 			projectDirPath = "";
@@ -176,8 +206,11 @@
 				A982F784287FEDD200FBBDE0 /* AppDescriptionViewController.swift in Sources */,
 				A982F7882880161300FBBDE0 /* DescriptionUITableViewCell.swift in Sources */,
 				A93F3AFB287E971A0013A70E /* MenuListView.swift in Sources */,
+				A923623C28814268001CAC48 /* Dictionary.swift in Sources */,
 				A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */,
+				A923623A28813A01001CAC48 /* SQLiteCommands.swift in Sources */,
 				A93F3AFD287EDA1C0013A70E /* SettingsView.swift in Sources */,
+				A923623828812A64001CAC48 /* DBHelper.swift in Sources */,
 				A9315A19287D5A1F009D0535 /* AppDelegate.swift in Sources */,
 				A9315A1B287D5A1F009D0535 /* SceneDelegate.swift in Sources */,
 			);
@@ -395,15 +428,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A93F3AF7287E8FCC0013A70E /* XCRemoteSwiftPackageReference "DropDown" */ = {
+		A982F78B28802B8400FBBDE0 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AssistoLab/DropDown.git";
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.5;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A982F78C28802B8400FBBDE0 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A982F78B28802B8400FBBDE0 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A9315A0D287D5A1F009D0535 /* Project object */;
 }

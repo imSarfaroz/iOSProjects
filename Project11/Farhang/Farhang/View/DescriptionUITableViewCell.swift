@@ -14,7 +14,7 @@ class DescriptionUITableViewCell: UITableViewCell {
         let word = UILabel()
         word.textColor = .black
         word.translatesAutoresizingMaskIntoConstraints = false
-        word.text = "Sample word"
+//        word.text = "Sample word"
         word.font = UIFont(name: "HelveticaNeue", size: 18)
         return word
     }()
@@ -23,7 +23,7 @@ class DescriptionUITableViewCell: UITableViewCell {
         let wordDescription = UILabel()
         wordDescription.textColor = .black
         wordDescription.translatesAutoresizingMaskIntoConstraints = false
-        wordDescription.text = "word description"
+//        wordDescription.text = "word description"
         wordDescription.font = UIFont(name: "HelveticaNeue", size: 12)
         return wordDescription
     }()
