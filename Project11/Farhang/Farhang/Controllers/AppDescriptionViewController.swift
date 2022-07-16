@@ -59,8 +59,8 @@ class AppDescriptionViewController: UIViewController {
             wordDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/15),
             wordDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/15)
         ]
-        
         NSLayoutConstraint.activate(wordText)
         NSLayoutConstraint.activate(descriptionText)
     }
+
 }

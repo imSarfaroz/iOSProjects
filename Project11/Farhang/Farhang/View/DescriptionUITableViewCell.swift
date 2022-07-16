@@ -50,6 +50,11 @@ class DescriptionUITableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(description_word)
     }
     
+    func configure(word: Dictionary) {
+        self.word.text = word.word
+        self.wordDescription.text = word.article
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

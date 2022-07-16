@@ -22,6 +22,7 @@
 		A982F786287FEEB000FBBDE0 /* SearchHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */; };
 		A982F7882880161300FBBDE0 /* DescriptionUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */; };
 		A982F78D28802B8400FBBDE0 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = A982F78C28802B8400FBBDE0 /* SQLite */; };
+		A9EB209A2882D04900A90A92 /* data.db in Resources */ = {isa = PBXBuildFile; fileRef = A9EB20982882817600A90A92 /* data.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		A982F783287FEDD200FBBDE0 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
 		A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewController.swift; sourceTree = "<group>"; };
 		A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionUITableViewCell.swift; sourceTree = "<group>"; };
+		A9EB20982882817600A90A92 /* data.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = data.db; path = ../../../data.db; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 		A982F78E28804E9C00FBBDE0 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				A9EB20982882817600A90A92 /* data.db */,
 				A923623728812A64001CAC48 /* DBHelper.swift */,
 				A923623928813A01001CAC48 /* SQLiteCommands.swift */,
 			);
@@ -189,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EB209A2882D04900A90A92 /* data.db in Resources */,
 				A9315A25287D5A20009D0535 /* LaunchScreen.storyboard in Resources */,
 				A9315A22287D5A20009D0535 /* Assets.xcassets in Resources */,
 			);

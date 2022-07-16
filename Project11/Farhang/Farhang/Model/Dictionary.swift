@@ -9,7 +9,8 @@ import Foundation
 
 struct Dictionary {
     // Variables
-    let id: Int
+    let word_id: Int
     let word: String
-    let description: String
+    let article: String
+    let dictionary: Int
 }

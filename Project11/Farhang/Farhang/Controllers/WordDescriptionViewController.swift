@@ -11,14 +11,14 @@ class WordDescriptionViewController: UIViewController {
     
     private let wordLabel: UILabel = {
        let wordLabel = UILabel()
-        wordLabel.text = "Sample Text"
+       // wordLabel.text = "Sample Text"
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
     }()
     
     private let wordDescriptionLabel: UILabel = {
        let wordLabel = UILabel()
-        wordLabel.text = "Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text"
+       // wordLabel.text = "Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text"
         wordLabel.numberOfLines = 0;
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
@@ -31,16 +31,7 @@ class WordDescriptionViewController: UIViewController {
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()
-        
-        configureNavbar()
-    }
-    
-    func configureNavbar() {
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info"),
-                                                                 style: .plain,
-                                                                 target: self,
-                                                                 action: nil)
+
     }
     
     func applyConstraints() {
@@ -58,5 +49,10 @@ class WordDescriptionViewController: UIViewController {
         
         NSLayoutConstraint.activate(wordText)
         NSLayoutConstraint.activate(descriptionText)
+    }
+    
+    func configure(word: Dictionary) {
+        self.wordLabel.text = word.word
+        self.wordDescriptionLabel.text = word.article
     }
 }
