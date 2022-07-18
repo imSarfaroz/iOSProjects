@@ -8,26 +8,43 @@
 import UIKit
 import SQLite
 
-class MainViewController: UIViewController, UISearchResultsUpdating {
+class MainViewController: UIViewController {
     
     var isMenuOpened:Bool = false
     var isSettingsOpened:Bool = false
     
-    var db = DBHelper()
-    var emps = Array<Dictionary>()
+    var filteredSearchDictionary = [Dictionary]()
     
+    // Main tableView
     private let discoverTable: UITableView = {
         let table = UITableView()
         table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: DescriptionUITableViewCell.identifies)
         return table
     }()
     
+    // Searching feature functions
     private let searchController: UISearchController = {
         let controller = UISearchController()
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
         controller.searchBar.searchBarStyle = .minimal
         return controller
     }()
+    
+    func filterRowsForSearchedText(_ searchText: String) {
+        filteredSearchDictionary = words.filter({( wordSearch : Dictionary) -> Bool in
+            return wordSearch.word.lowercased().starts(with: searchText.lowercased())
+            //            ||wordSearch.article.lowercased().contains(searchText.lowercased()
+        })
+        discoverTable.reloadData()
+    }
+    
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
     
     let menuListView: MenuListView = {
         let view = MenuListView()
@@ -47,7 +64,7 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.white
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.title = changeTheTitleName("Руси-Тоҷики")
         view.addSubview(discoverTable)
@@ -56,16 +73,12 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
         
         navigationItem.searchController = searchController
         searchController.hidesNavigationBarDuringPresentation = false
+        definesPresentationContext = true
         searchController.searchResultsUpdater = self
-//        Bundle.main.url(forResource: "data", withExtension: "db")
-       // SQLiteCommands.createTable()
-       // SQLiteCommands.insertRow(Dictionary(word_id: , word: <#T##String#>, article: <#T##String#>))
-//        SQLiteCommands.insertRow(Dictionary(id: <#T##Int#>, word: <#T##String#>, description: <#T##String#>)
-//        emps = SQLiteCommands.presentRows()!
         
         words = SQLiteCommands.presentRows()
         
-        // TAP Gestures"
+        // TAP Gestures
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
         tapGestureLabel1.numberOfTapsRequired = 1
         menuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
@@ -99,10 +112,10 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.isUserInteractionEnabled = true
     }
     
+    // Label taps funcitons
     @objc func mySecondLabelViewTapped(_ sender: UITapGestureRecognizer) {
         
         print("tap 2nd label working")
-        //        changeTheTitleName(menuListView.textLabel2.text!)
         navigationItem.title = changeTheTitleName(menuListView.textLabel2.text!)
         menuListView.isHidden = true
         isMenuOpened = false
@@ -152,6 +165,7 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
         discoverTable.frame = view.bounds
     }
     
+    // Navigation bar
     func configureNavbar() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings_icon"),
@@ -212,16 +226,13 @@ class MainViewController: UIViewController, UISearchResultsUpdating {
             }
         }
     }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else {return}
-        
-        print(text)
-    }
 }
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredSearchDictionary.count
+        }
         return 100
     }
     
@@ -229,6 +240,12 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath) as! DescriptionUITableViewCell
         cell.configure(word: words[indexPath.row])
         
+        if isFiltering {
+            cell.configure(word: filteredSearchDictionary[indexPath.row])
+            
+        } else {
+            cell.configure(word: words[indexPath.row])
+        }
         return cell
     }
     
@@ -238,8 +255,22 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         settingsListView.isHidden = true
         
         let wordDescriptionViewController = WordDescriptionViewController()
+        if isFiltering {
+            wordDescriptionViewController.configure(word: filteredSearchDictionary[indexPath.row])
+        } else {
+            wordDescriptionViewController.configure(word: words[indexPath.row])
+        }
         self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
     }
-    
-    
+}
+
+extension MainViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let term = searchController.searchBar.text {
+            filterRowsForSearchedText(term)
+        }
+        
+        guard let text = searchController.searchBar.text else {return}
+        print(text)
+    }
 }

@@ -74,7 +74,7 @@ class SQLiteCommands {
         var dictionaryArray = [Dictionary]()
         
         // sorting data in descending order by ID
-        wordTable = wordTable.order(word_id.desc)
+        wordTable = wordTable.order(word_id.asc)
         
         do {
           //  database.prepare(wordTable.where(word.like(search, escape: nil), word_id == 2))

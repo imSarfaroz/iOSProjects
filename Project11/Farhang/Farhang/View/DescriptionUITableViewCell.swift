@@ -23,6 +23,8 @@ class DescriptionUITableViewCell: UITableViewCell {
         let wordDescription = UILabel()
         wordDescription.textColor = .black
         wordDescription.translatesAutoresizingMaskIntoConstraints = false
+        wordDescription.lineBreakMode = .byTruncatingTail
+        wordDescription.numberOfLines = 1;
 //        wordDescription.text = "word description"
         wordDescription.font = UIFont(name: "HelveticaNeue", size: 12)
         return wordDescription
@@ -43,6 +45,7 @@ class DescriptionUITableViewCell: UITableViewCell {
         ]
         let description_word = [
             wordDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            wordDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             wordDescription.topAnchor.constraint(equalTo: word.bottomAnchor, constant: 5),
         ]
         
