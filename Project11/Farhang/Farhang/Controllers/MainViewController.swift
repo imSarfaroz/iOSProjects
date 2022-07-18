@@ -14,6 +14,7 @@ class MainViewController: UIViewController {
     var isSettingsOpened:Bool = false
     
     var filteredSearchDictionary = [Dictionary]()
+    var dictionaryTypes:Int = 1
     
     // Main tableView
     private let discoverTable: UITableView = {
@@ -27,23 +28,14 @@ class MainViewController: UIViewController {
         let controller = UISearchController()
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
         controller.searchBar.searchBarStyle = .minimal
+        controller.searchBar.autocapitalizationType = .none
         return controller
     }()
     
     func filterRowsForSearchedText(_ searchText: String) {
-        filteredSearchDictionary = words.filter({( wordSearch : Dictionary) -> Bool in
-            return wordSearch.word.lowercased().starts(with: searchText.lowercased())
-            //            ||wordSearch.article.lowercased().contains(searchText.lowercased()
-        })
+        words.removeAll()
+        words = SQLiteCommands.presentRows(id: dictionaryTypes, searchText: searchText)
         discoverTable.reloadData()
-    }
-    
-    var isSearchBarEmpty: Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    var isFiltering: Bool {
-        return searchController.isActive && !isSearchBarEmpty
     }
     
     let menuListView: MenuListView = {
@@ -66,7 +58,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.title = changeTheTitleName("Руси-Тоҷики")
+        navigationItem.title = changeTheTitleName("Тоҷики-Руси")
         view.addSubview(discoverTable)
         discoverTable.delegate = self
         discoverTable.dataSource = self
@@ -76,7 +68,7 @@ class MainViewController: UIViewController {
         definesPresentationContext = true
         searchController.searchResultsUpdater = self
         
-        words = SQLiteCommands.presentRows()
+        words = SQLiteCommands.presentRows(id: 1)
         
         // TAP Gestures
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
@@ -110,6 +102,10 @@ class MainViewController: UIViewController {
         
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
+        words.removeAll()
+        words = SQLiteCommands.presentRows(id: 1)
+        discoverTable.reloadData()
+        dictionaryTypes = 1
     }
     
     // Label taps funcitons
@@ -122,6 +118,10 @@ class MainViewController: UIViewController {
         
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
+        words.removeAll()
+        words = SQLiteCommands.presentRows(id: 2)
+        discoverTable.reloadData()
+        dictionaryTypes = 2
     }
     
     @objc func myThirdLabelViewTapped(_ sender: UITapGestureRecognizer) {
@@ -132,6 +132,10 @@ class MainViewController: UIViewController {
         
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
+        words.removeAll()
+        words = SQLiteCommands.presentRows(id: 3)
+        discoverTable.reloadData()
+        dictionaryTypes = 3
     }
     
     @objc func myFirstSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
@@ -230,22 +234,13 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredSearchDictionary.count
-        }
-        return 100
+        return words.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath) as! DescriptionUITableViewCell
         cell.configure(word: words[indexPath.row])
         
-        if isFiltering {
-            cell.configure(word: filteredSearchDictionary[indexPath.row])
-            
-        } else {
-            cell.configure(word: words[indexPath.row])
-        }
         return cell
     }
     
@@ -255,11 +250,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         settingsListView.isHidden = true
         
         let wordDescriptionViewController = WordDescriptionViewController()
-        if isFiltering {
-            wordDescriptionViewController.configure(word: filteredSearchDictionary[indexPath.row])
-        } else {
-            wordDescriptionViewController.configure(word: words[indexPath.row])
-        }
+        wordDescriptionViewController.configure(word: words[indexPath.row])
+        
         self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
     }
 }
@@ -274,3 +266,4 @@ extension MainViewController: UISearchResultsUpdating {
         print(text)
     }
 }
+

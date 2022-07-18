@@ -14,7 +14,7 @@ class DescriptionUITableViewCell: UITableViewCell {
         let word = UILabel()
         word.textColor = .black
         word.translatesAutoresizingMaskIntoConstraints = false
-//        word.text = "Sample word"
+        //        word.text = "Sample word"
         word.font = UIFont(name: "HelveticaNeue", size: 18)
         return word
     }()
@@ -25,7 +25,7 @@ class DescriptionUITableViewCell: UITableViewCell {
         wordDescription.translatesAutoresizingMaskIntoConstraints = false
         wordDescription.lineBreakMode = .byTruncatingTail
         wordDescription.numberOfLines = 1;
-//        wordDescription.text = "word description"
+        //        wordDescription.text = "word description"
         wordDescription.font = UIFont(name: "HelveticaNeue", size: 12)
         return wordDescription
     }()
@@ -61,5 +61,4 @@ class DescriptionUITableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

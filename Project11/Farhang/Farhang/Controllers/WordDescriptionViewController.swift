@@ -11,14 +11,13 @@ class WordDescriptionViewController: UIViewController {
     
     private let wordLabel: UILabel = {
        let wordLabel = UILabel()
-       // wordLabel.text = "Sample Text"
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
+        wordLabel.font =  UIFont(name: "HelveticaNeue", size: 24)
         return wordLabel
     }()
     
     private let wordDescriptionLabel: UILabel = {
        let wordLabel = UILabel()
-       // wordLabel.text = "Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text Sample Text description of the text"
         wordLabel.numberOfLines = 0;
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
@@ -27,7 +26,6 @@ class WordDescriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()
@@ -46,7 +44,6 @@ class WordDescriptionViewController: UIViewController {
             wordDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/15),
             wordDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/15)
         ]
-        
         NSLayoutConstraint.activate(wordText)
         NSLayoutConstraint.activate(descriptionText)
     }

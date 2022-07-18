@@ -9,13 +9,8 @@ import SQLite
 import SQLite3
 
 class SQLiteCommands {
-//    static var table = Table("dictionary")
+    //    static var table = Table("dictionary")
     static var wordTable = Table("word")
-    
-//    // Expresssions
-//    static let dictionary_id = Expression<Int>("dictionary_id")
-//    static let from_language = Expression<String>("from_language")
-//    static let to_language = Expression<String>("to_language")
     
     // Expresssions
     static let word_id = Expression<Int>("word_id")
@@ -23,48 +18,7 @@ class SQLiteCommands {
     static let article = Expression<String>("article")
     static let dictionaryNumber = Expression<Int>("dictionary")
     
-    // Creating Table
-//    static func createTable() {
-//        guard let database = DBHelper.sharedInstance.database
-//        else {
-//            print("Datastore Connection Error")
-//            return
-//        }
-//        
-//        do {
-//            try database.run(table.create(ifNotExists: true){ table in
-//                table.column(word_id, primaryKey: true)
-//                table.column(word)
-//                table.column(article)
-//            })
-//        } catch {
-//            print("Table already exists: \(error)")
-//            
-//        }
-//    }
-    
-    // Inserting Row
-//    static func insertRow(_ dictionaryValues:Dictionary)  -> Bool? {
-//        guard let database = DBHelper.sharedInstance.database
-//        else {
-//            print("DataStore Connection Error")
-//            return nil
-//        }
-//        do {
-//            try database.run(word.insert(word <- dictionaryValues.word, article <- dictionaryValues.article))
-//            return true
-//        } catch let Result.error(message, code, statement) where
-//                    code == SQLITE_CONSTRAINT {
-//            print("Insert now failed: \(message), in \(String(describing: statement))")
-//            return false
-//        } catch _ {
-//            return false
-//        }
-//    }
-//    
-    // Present rows
-//search: String = "", id: Int
-    static func presentRows() -> [Dictionary]? {
+    static func presentRows(id: Int, searchText: String = "") -> [Dictionary]? {
         guard let database = DBHelper.sharedInstance.database
         else {
             print("datastore connection error")
@@ -77,8 +31,7 @@ class SQLiteCommands {
         wordTable = wordTable.order(word_id.asc)
         
         do {
-          //  database.prepare(wordTable.where(word.like(search, escape: nil), word_id == 2))
-            for dictionary in try database.prepare(wordTable){
+            for dictionary in try database.prepare(wordTable.where(dictionaryNumber == id && word.like("%\(searchText)%", escape: .none)).limit(100)){
                 let idValue = dictionary[word_id]
                 let wordValue = dictionary[word]
                 let descriptionValue = dictionary[article]

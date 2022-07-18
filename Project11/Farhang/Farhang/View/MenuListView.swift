@@ -9,10 +9,9 @@ import UIKit
 
 class MenuListView: UIView {
     
-    
     public let textLabel1: UILabel = {
         let textLabel1 = UILabel()
-        textLabel1.text = "  Руси-Тоҷики"
+        textLabel1.text = "  Тоҷики-Руси"
         textLabel1.textColor = .black
         textLabel1.clipsToBounds = true
         textLabel1.layer.cornerRadius = 10
@@ -27,7 +26,7 @@ class MenuListView: UIView {
     
     public let textLabel2: UILabel = {
         let textLabel2 = UILabel()
-        textLabel2.text = "  Тоҷики-Руси"
+        textLabel2.text = "  Тоҷики-Тоҷики"
         textLabel2.textColor = .black
         textLabel2.clipsToBounds = true
         textLabel2.layer.cornerRadius = 1.0
@@ -41,7 +40,7 @@ class MenuListView: UIView {
     
     public let textLabel3: UILabel = {
         let textLabel3 = UILabel()
-        textLabel3.text = "  Тоҷики-Тоҷики"
+        textLabel3.text = "  Руси-Тоҷики"
         textLabel3.clipsToBounds = true
         textLabel3.layer.cornerRadius = 10
         textLabel3.layer.borderWidth = 0.15
