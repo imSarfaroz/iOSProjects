@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     var isSettingsOpened:Bool = false
     
     var filteredSearchDictionary = [Dictionary]()
-    var dictionaryTypes:Int = 1
+    var dictionaryType:Int = 1
     
     // Main tableView
     private let discoverTable: UITableView = {
@@ -34,7 +34,7 @@ class MainViewController: UIViewController {
     
     func filterRowsForSearchedText(_ searchText: String) {
         words.removeAll()
-        words = SQLiteCommands.presentRows(id: dictionaryTypes, searchText: searchText)
+        words = SQLiteCommands.presentRows(id: dictionaryType, searchText: searchText)
         discoverTable.reloadData()
     }
     
@@ -53,6 +53,7 @@ class MainViewController: UIViewController {
     }()
     
     var words: [Dictionary]!
+    var insert: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +70,8 @@ class MainViewController: UIViewController {
         searchController.searchResultsUpdater = self
         
         words = SQLiteCommands.presentRows(id: 1)
+    
         
-        // TAP Gestures
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
         tapGestureLabel1.numberOfTapsRequired = 1
         menuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
@@ -94,8 +95,8 @@ class MainViewController: UIViewController {
         configureNavbar()
     }
     
+    // Label taps funcitons
     @objc func myFirstLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        print("tap 1st label working")
         navigationItem.title = changeTheTitleName(menuListView.textLabel1.text!)
         menuListView.isHidden = true
         isMenuOpened = false
@@ -105,13 +106,10 @@ class MainViewController: UIViewController {
         words.removeAll()
         words = SQLiteCommands.presentRows(id: 1)
         discoverTable.reloadData()
-        dictionaryTypes = 1
+        dictionaryType = 1
     }
     
-    // Label taps funcitons
     @objc func mySecondLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        
-        print("tap 2nd label working")
         navigationItem.title = changeTheTitleName(menuListView.textLabel2.text!)
         menuListView.isHidden = true
         isMenuOpened = false
@@ -121,11 +119,10 @@ class MainViewController: UIViewController {
         words.removeAll()
         words = SQLiteCommands.presentRows(id: 2)
         discoverTable.reloadData()
-        dictionaryTypes = 2
+        dictionaryType = 2
     }
     
     @objc func myThirdLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        print("tap 3rd label working")
         navigationItem.title = changeTheTitleName(menuListView.textLabel3.text!)
         menuListView.isHidden = true
         isMenuOpened = false
@@ -135,11 +132,10 @@ class MainViewController: UIViewController {
         words.removeAll()
         words = SQLiteCommands.presentRows(id: 3)
         discoverTable.reloadData()
-        dictionaryTypes = 3
+        dictionaryType = 3
     }
     
     @objc func myFirstSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        print("tap 1st Setigns label working")
         let searchHistoryViewController = SearchHistoryViewController()
         self.navigationController?.pushViewController(searchHistoryViewController, animated: true)
         settingsListView.isHidden = true
@@ -150,7 +146,6 @@ class MainViewController: UIViewController {
     }
     
     @objc func mySecondSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        print("tap 2nd Setigns label working")
         let appDescriptionViewController = AppDescriptionViewController()
         self.navigationController?.pushViewController(appDescriptionViewController, animated: true)
         settingsListView.isHidden = true
@@ -186,12 +181,10 @@ class MainViewController: UIViewController {
     @objc
     func rightHandAction() {
         navigationController?.view.addSubview(settingsListView)
-        //view.addSubview(settingsListView)
         settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
         settingsListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 2.3).isActive = true
         settingsListView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         settingsListView.heightAnchor.constraint(equalToConstant: 90).isActive = true
-        print("right bar button action")
         if(isMenuOpened == false) {
             if(isSettingsOpened == false) {
                 settingsListView.isHidden = false
@@ -210,12 +203,10 @@ class MainViewController: UIViewController {
     @objc
     func leftHandAction() {
         navigationController?.view.addSubview(menuListView)
-        //view.addSubview(menuListView)
         menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
         menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 12).isActive = true
         menuListView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         menuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        print("left bar button action")
         if(isSettingsOpened == false) {
             if(isMenuOpened == false) {
                 menuListView.isHidden = false
@@ -240,7 +231,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath) as! DescriptionUITableViewCell
         cell.configure(word: words[indexPath.row])
-        
         return cell
     }
     
@@ -251,8 +241,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         
         let wordDescriptionViewController = WordDescriptionViewController()
         wordDescriptionViewController.configure(word: words[indexPath.row])
-        
         self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+        insert = SQLiteCommands.insertRow(words[indexPath.row])!
     }
 }
 
@@ -261,9 +251,7 @@ extension MainViewController: UISearchResultsUpdating {
         if let term = searchController.searchBar.text {
             filterRowsForSearchedText(term)
         }
-        
-        guard let text = searchController.searchBar.text else {return}
-        print(text)
+        guard searchController.searchBar.text != nil else {return}
     }
 }
 

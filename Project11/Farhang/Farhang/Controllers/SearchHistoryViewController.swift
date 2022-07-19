@@ -8,13 +8,14 @@
 import UIKit
 
 class SearchHistoryViewController: UIViewController {
+    var words: [Dictionary]!
     
     private let searchHistoryTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
-        table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: DescriptionUITableViewCell.identifies)
         return table
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(searchHistoryTable)
@@ -34,30 +35,28 @@ extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        cell.textLabel?.text = "search history words sample"
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath) as! DescriptionUITableViewCell
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
+        
         let myLabel = UILabel()
         myLabel.frame = CGRect(x: 20, y: 2, width: 320, height: 40)
         myLabel.font = UIFont.boldSystemFont(ofSize: 24)
         myLabel.text = "Таърихи Ҷустуҷӯ"
-
+        
         let headerView = UIView()
         headerView.addSubview(myLabel)
-
         return headerView
     }
     
-        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 50
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
 }
