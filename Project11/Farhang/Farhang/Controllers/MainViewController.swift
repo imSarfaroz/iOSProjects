@@ -53,7 +53,6 @@ class MainViewController: UIViewController {
     }()
     
     var words: [Dictionary]!
-    var insert: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +69,8 @@ class MainViewController: UIViewController {
         searchController.searchResultsUpdater = self
         
         words = SQLiteCommands.presentRows(id: 1)
+
+//        insert = SQLiteCommands.insertRow(Dictionary(word_id: 1, word: "1", article: "11", dictionary: 1))
     
         
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
@@ -242,7 +243,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         let wordDescriptionViewController = WordDescriptionViewController()
         wordDescriptionViewController.configure(word: words[indexPath.row])
         self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
-        insert = SQLiteCommands.insertRow(words[indexPath.row])!
+        
+        SQLiteCommands.insertRow(words[indexPath.row])
     }
 }
 

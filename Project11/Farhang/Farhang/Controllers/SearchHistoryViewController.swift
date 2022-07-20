@@ -12,15 +12,33 @@ class SearchHistoryViewController: UIViewController {
     
     private let searchHistoryTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
-        table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: DescriptionUITableViewCell.identifies)
+        table.register(SearchHistoryTableViewCell.self, forCellReuseIdentifier: SearchHistoryTableViewCell.identifies)
         return table
     }()
+    
+
+    var historyWords: [WordHistory]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(searchHistoryTable)
         searchHistoryTable.delegate = self
         searchHistoryTable.dataSource = self
+//        historyWords = SQLiteCommands.getAllHistories()
+//        words = SQLiteCommands.presentHistoryRows(ids: "2")
+        historyWords = SQLiteCommands.getAllHistories()
+        let str = historyWords.map { item in
+            String(item.word_id)
+        }
+        var newStr = "("
+        str.forEach { item in
+            newStr += item + ", "
+        }
+        newStr = String(newStr.dropLast(2))
+        newStr += ")"
+        print(newStr)
+//        print ()
+        words = SQLiteCommands.presentHistoryRows(ids: newStr)
     }
     
     override func viewDidLayoutSubviews() {
@@ -31,17 +49,17 @@ class SearchHistoryViewController: UIViewController {
 
 extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return words.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath) as! DescriptionUITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifies, for: indexPath) as! SearchHistoryTableViewCell
+        cell.configure(word: words[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
