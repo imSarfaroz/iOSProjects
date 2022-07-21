@@ -23,6 +23,7 @@
 		A982F786287FEEB000FBBDE0 /* SearchHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */; };
 		A982F7882880161300FBBDE0 /* DescriptionUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */; };
 		A982F78D28802B8400FBBDE0 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = A982F78C28802B8400FBBDE0 /* SQLite */; };
+		A9AD5830288921060076F73E /* WordHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AD582F288921060076F73E /* WordHistory.swift */; };
 		A9EB209A2882D04900A90A92 /* data.db in Resources */ = {isa = PBXBuildFile; fileRef = A9EB20982882817600A90A92 /* data.db */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		A982F783287FEDD200FBBDE0 /* AppDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionViewController.swift; sourceTree = "<group>"; };
 		A982F785287FEEB000FBBDE0 /* SearchHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryViewController.swift; sourceTree = "<group>"; };
 		A982F7872880161300FBBDE0 /* DescriptionUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionUITableViewCell.swift; sourceTree = "<group>"; };
+		A9AD582F288921060076F73E /* WordHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordHistory.swift; sourceTree = "<group>"; };
 		A9EB20982882817600A90A92 /* data.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = data.db; path = ../../../data.db; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				A923623B28814268001CAC48 /* Dictionary.swift */,
+				A9AD582F288921060076F73E /* WordHistory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				A923623C28814268001CAC48 /* Dictionary.swift in Sources */,
 				A9315A2E287D8E19009D0535 /* WordDescriptionViewController.swift in Sources */,
 				A923623A28813A01001CAC48 /* SQLiteCommands.swift in Sources */,
+				A9AD5830288921060076F73E /* WordHistory.swift in Sources */,
 				A93F3AFD287EDA1C0013A70E /* SettingsView.swift in Sources */,
 				A95CD88B28880B6D00C55C46 /* SearchHistoryTableViewCell.swift in Sources */,
 				A923623828812A64001CAC48 /* DBHelper.swift in Sources */,

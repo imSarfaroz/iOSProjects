@@ -28,20 +28,58 @@ class MainViewController: UIViewController {
         let controller = UISearchController()
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
         controller.searchBar.searchBarStyle = .minimal
+        controller.searchBar.spellCheckingType = .no
         controller.searchBar.autocapitalizationType = .none
         return controller
     }()
     
     func filterRowsForSearchedText(_ searchText: String) {
         words.removeAll()
+//        let globSearchTextValue:String = createSeachTextValue(enteredText: searchText)
         words = SQLiteCommands.presentRows(id: dictionaryType, searchText: searchText)
+        
         discoverTable.reloadData()
     }
+    
+    func addToolBar() {
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
+        
+        //items
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
+        let doneButton = UIBarButtonItem(title: "  Ҳ  ", style: .done, target: self, action:  #selector(dismissManual))
+        let doneButton2 = UIBarButtonItem(title: "  Ӯ  ", style: .done, target: self, action: #selector(dismissManual2))
+        let doneButton3 = UIBarButtonItem(title: "  Ғ  ", style: .done, target: self, action: #selector(dismissManual3))
+        let doneButton4 = UIBarButtonItem(title: "  Ҷ  ", style: .done, target: self, action: #selector(dismissManual4))
+        let doneButton5 = UIBarButtonItem(title: "  Қ  ", style: .done, target: self, action: #selector(dismissManual5))
+        let doneButton6 = UIBarButtonItem(title: "  Й             ", style: .done, target: self, action: #selector(dismissManual6))
+        toolBar.items = [flexibleSpace, doneButton, doneButton2, doneButton3, doneButton4, doneButton5, doneButton6]
+        toolBar.tintColor = .black
+        toolBar.barStyle = .default
+        self.searchController.searchBar.inputAccessoryView = toolBar
+    }
+    @objc func dismissManual() {
+        searchController.searchBar.text! += "ҳ"
+    }
+    @objc func dismissManual2() {
+        searchController.searchBar.text! += "ӯ"
+    }
+    @objc func dismissManual3() {
+        searchController.searchBar.text! += "ғ"
+    }
+    @objc func dismissManual4() {
+        searchController.searchBar.text! += "ҷ"
+    }
+    @objc func dismissManual5() {
+        searchController.searchBar.text! += "қ"
+    }
+    @objc func dismissManual6() {
+        searchController.searchBar.text! += "й"
+    }
+    
     
     let menuListView: MenuListView = {
         let view = MenuListView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
         return view
     }()
     
@@ -62,16 +100,13 @@ class MainViewController: UIViewController {
         view.addSubview(discoverTable)
         discoverTable.delegate = self
         discoverTable.dataSource = self
+        addToolBar()
         
         navigationItem.searchController = searchController
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
         searchController.searchResultsUpdater = self
-        
         words = SQLiteCommands.presentRows(id: 1)
-
-//        insert = SQLiteCommands.insertRow(Dictionary(word_id: 1, word: "1", article: "11", dictionary: 1))
-    
         
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
         tapGestureLabel1.numberOfTapsRequired = 1
@@ -256,4 +291,5 @@ extension MainViewController: UISearchResultsUpdating {
         guard searchController.searchBar.text != nil else {return}
     }
 }
+
 

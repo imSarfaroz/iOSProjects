@@ -36,8 +36,6 @@ class AppDescriptionViewController: UIViewController {
         configureNavbar()
     }
     
-    
-    
     func configureNavbar() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info"),

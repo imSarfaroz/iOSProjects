@@ -16,7 +16,6 @@ class SearchHistoryViewController: UIViewController {
         return table
     }()
     
-
     var historyWords: [WordHistory]!
     
     override func viewDidLoad() {
@@ -54,12 +53,16 @@ extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifies, for: indexPath) as! SearchHistoryTableViewCell
+        
         cell.configure(word: words[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let wordDescriptionViewController = WordDescriptionViewController()
+        wordDescriptionViewController.configure(word: words[indexPath.row])
+        self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
