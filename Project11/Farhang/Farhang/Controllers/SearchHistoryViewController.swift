@@ -9,6 +9,7 @@ import UIKit
 
 class SearchHistoryViewController: UIViewController {
     var words: [Dictionary]!
+    var historyWords: [WordHistory]!
     
     private let searchHistoryTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -16,15 +17,11 @@ class SearchHistoryViewController: UIViewController {
         return table
     }()
     
-    var historyWords: [WordHistory]!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(searchHistoryTable)
         searchHistoryTable.delegate = self
         searchHistoryTable.dataSource = self
-//        historyWords = SQLiteCommands.getAllHistories()
-//        words = SQLiteCommands.presentHistoryRows(ids: "2")
         historyWords = SQLiteCommands.getAllHistories()
         let str = historyWords.map { item in
             String(item.word_id)
@@ -36,7 +33,6 @@ class SearchHistoryViewController: UIViewController {
         newStr = String(newStr.dropLast(2))
         newStr += ")"
         print(newStr)
-//        print ()
         words = SQLiteCommands.presentHistoryRows(ids: newStr)
     }
     
@@ -53,7 +49,6 @@ extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchHistoryTableViewCell.identifies, for: indexPath) as! SearchHistoryTableViewCell
-        
         cell.configure(word: words[indexPath.row])
         return cell
     }
@@ -66,12 +61,10 @@ extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         let myLabel = UILabel()
         myLabel.frame = CGRect(x: 20, y: 2, width: 320, height: 40)
         myLabel.font = UIFont.boldSystemFont(ofSize: 24)
         myLabel.text = "Таърихи Ҷустуҷӯ"
-        
         let headerView = UIView()
         headerView.addSubview(myLabel)
         return headerView

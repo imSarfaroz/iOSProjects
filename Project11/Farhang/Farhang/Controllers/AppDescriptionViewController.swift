@@ -10,7 +10,7 @@ import UIKit
 class AppDescriptionViewController: UIViewController {
     
     private let wordLabel: UILabel = {
-       let wordLabel = UILabel()
+        let wordLabel = UILabel()
         wordLabel.text = "Дар Бораи Барнома"
         wordLabel.font = UIFont(name: "HelveticaNeue", size: 20)
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -18,7 +18,7 @@ class AppDescriptionViewController: UIViewController {
     }()
     
     private let wordDescriptionLabel: UILabel = {
-       let wordLabel = UILabel()
+        let wordLabel = UILabel()
         wordLabel.text = "This is a lable for an app Description This is a lable for an app Description This is a lable for an app Description This is a lable for an app Description This is a lable for an app Description"
         wordLabel.numberOfLines = 0
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -28,28 +28,24 @@ class AppDescriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()
-        
         configureNavbar()
     }
     
     func configureNavbar() {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info"),
-                                                                 style: .plain,
-                                                                 target: self,
-                                                                 action: nil)
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: nil)
     }
     
     func applyConstraints() {
-        
         let wordText = [
             wordLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/8),
             wordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            wordLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.widthAnchor/2)
         ]
         
         let descriptionText = [
@@ -60,5 +56,4 @@ class AppDescriptionViewController: UIViewController {
         NSLayoutConstraint.activate(wordText)
         NSLayoutConstraint.activate(descriptionText)
     }
-
 }

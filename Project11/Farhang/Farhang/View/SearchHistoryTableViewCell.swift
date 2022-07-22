@@ -14,7 +14,6 @@ class SearchHistoryTableViewCell: UITableViewCell {
         let word = UILabel()
         word.textColor = .black
         word.translatesAutoresizingMaskIntoConstraints = false
-//                word.text = "rd"
         word.font = UIFont(name: "HelveticaNeue", size: 18)
         return word
     }()
@@ -25,7 +24,6 @@ class SearchHistoryTableViewCell: UITableViewCell {
         wordDescription.translatesAutoresizingMaskIntoConstraints = false
         wordDescription.lineBreakMode = .byTruncatingTail
         wordDescription.numberOfLines = 1;
-//                wordDescription.text = "word description"
         wordDescription.font = UIFont(name: "HelveticaNeue", size: 12)
         return wordDescription
     }()
@@ -34,7 +32,6 @@ class SearchHistoryTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(word)
         contentView.addSubview(wordDescription)
-        
         applyConstraints()
     }
     

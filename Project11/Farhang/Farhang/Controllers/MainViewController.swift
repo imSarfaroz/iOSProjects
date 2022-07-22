@@ -25,57 +25,61 @@ class MainViewController: UIViewController {
     
     // Searching feature functions
     private let searchController: UISearchController = {
-        let controller = UISearchController()
+        let controller = UISearchController(searchResultsController: nil)
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
         controller.searchBar.searchBarStyle = .minimal
         controller.searchBar.spellCheckingType = .no
         controller.searchBar.autocapitalizationType = .none
+        controller.hidesNavigationBarDuringPresentation = false
         return controller
     }()
     
     func filterRowsForSearchedText(_ searchText: String) {
         words.removeAll()
-//        let globSearchTextValue:String = createSeachTextValue(enteredText: searchText)
         words = SQLiteCommands.presentRows(id: dictionaryType, searchText: searchText)
-        
         discoverTable.reloadData()
     }
-    
+        //toolbar for keyboard
     func addToolBar() {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
         
         //items
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
-        let doneButton = UIBarButtonItem(title: "  Ҳ  ", style: .done, target: self, action:  #selector(dismissManual))
-        let doneButton2 = UIBarButtonItem(title: "  Ӯ  ", style: .done, target: self, action: #selector(dismissManual2))
-        let doneButton3 = UIBarButtonItem(title: "  Ғ  ", style: .done, target: self, action: #selector(dismissManual3))
-        let doneButton4 = UIBarButtonItem(title: "  Ҷ  ", style: .done, target: self, action: #selector(dismissManual4))
-        let doneButton5 = UIBarButtonItem(title: "  Қ  ", style: .done, target: self, action: #selector(dismissManual5))
-        let doneButton6 = UIBarButtonItem(title: "  Й             ", style: .done, target: self, action: #selector(dismissManual6))
-        toolBar.items = [flexibleSpace, doneButton, doneButton2, doneButton3, doneButton4, doneButton5, doneButton6]
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: self, action:nil)
+        let letterButton1 = UIBarButtonItem(title: "Ҳ", style: .done, target: self, action:  #selector(changeTheLetter1))
+        letterButton1.width = view.frame.width/6.5
+        let letterButton2 = UIBarButtonItem(title: "Ӯ", style: .done, target: self, action: #selector(changeTheLetter2))
+        letterButton2.width =  view.frame.width/6.5
+        let letterButton3 = UIBarButtonItem(title: "Ғ", style: .done, target: self, action: #selector(changeTheLetter3))
+        letterButton3.width =  view.frame.width/6.5
+        let letterButton4 = UIBarButtonItem(title: "Ҷ", style: .done, target: self, action: #selector(changeTheLetter4))
+        letterButton4.width =  view.frame.width/6.5
+        let letterButton5 = UIBarButtonItem(title: "Қ", style: .done, target: self, action: #selector(changeTheLetter5))
+        letterButton5.width =  view.frame.width/6.5
+        let letterButton6 = UIBarButtonItem(title: "Й", style: .done, target: self, action: #selector(changeTheLetter6))
+        letterButton6.width =  view.frame.width/6.5
+        toolBar.items = [flexibleSpace, letterButton1, letterButton2, letterButton3, letterButton4, letterButton5, letterButton6]
         toolBar.tintColor = .black
         toolBar.barStyle = .default
         self.searchController.searchBar.inputAccessoryView = toolBar
     }
-    @objc func dismissManual() {
+    @objc func changeTheLetter1() {
         searchController.searchBar.text! += "ҳ"
     }
-    @objc func dismissManual2() {
+    @objc func changeTheLetter2() {
         searchController.searchBar.text! += "ӯ"
     }
-    @objc func dismissManual3() {
+    @objc func changeTheLetter3() {
         searchController.searchBar.text! += "ғ"
     }
-    @objc func dismissManual4() {
+    @objc func changeTheLetter4() {
         searchController.searchBar.text! += "ҷ"
     }
-    @objc func dismissManual5() {
+    @objc func changeTheLetter5() {
         searchController.searchBar.text! += "қ"
     }
-    @objc func dismissManual6() {
+    @objc func changeTheLetter6() {
         searchController.searchBar.text! += "й"
     }
-    
     
     let menuListView: MenuListView = {
         let view = MenuListView()
@@ -90,28 +94,37 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var words: [Dictionary]!
+    var words: [Dictionary] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        words = SQLiteCommands.presentRows(id: 1)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.hidesSearchBarWhenScrolling = false
+
         navigationItem.title = changeTheTitleName("Тоҷики-Руси")
         view.addSubview(discoverTable)
         discoverTable.delegate = self
         discoverTable.dataSource = self
         addToolBar()
         
-        navigationItem.searchController = searchController
-        searchController.hidesNavigationBarDuringPresentation = false
-        definesPresentationContext = true
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
+        } else {
+            discoverTable.tableHeaderView = searchController.searchBar
+            searchController.hidesNavigationBarDuringPresentation = false
+            definesPresentationContext = true
+        }
         searchController.searchResultsUpdater = self
-        words = SQLiteCommands.presentRows(id: 1)
-        
+       
+        // Tap gestures
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
         tapGestureLabel1.numberOfTapsRequired = 1
         menuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
-        
+
         let tapGestureLabel2 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.mySecondLabelViewTapped(_:)))
         tapGestureLabel2.numberOfTapsRequired = 1
         menuListView.textLabel2.addGestureRecognizer(tapGestureLabel2)
@@ -131,7 +144,7 @@ class MainViewController: UIViewController {
         configureNavbar()
     }
     
-    // Label taps funcitons
+    // Label taps funcitons   "Тоҷики-Руси"
     @objc func myFirstLabelViewTapped(_ sender: UITapGestureRecognizer) {
         navigationItem.title = changeTheTitleName(menuListView.textLabel1.text!)
         menuListView.isHidden = true
@@ -143,8 +156,9 @@ class MainViewController: UIViewController {
         words = SQLiteCommands.presentRows(id: 1)
         discoverTable.reloadData()
         dictionaryType = 1
+        searchController.searchBar.text = ""
     }
-    
+    // "Tоҷики-Тоҷики"
     @objc func mySecondLabelViewTapped(_ sender: UITapGestureRecognizer) {
         navigationItem.title = changeTheTitleName(menuListView.textLabel2.text!)
         menuListView.isHidden = true
@@ -156,8 +170,9 @@ class MainViewController: UIViewController {
         words = SQLiteCommands.presentRows(id: 2)
         discoverTable.reloadData()
         dictionaryType = 2
+        searchController.searchBar.text = ""
     }
-    
+    // "Руси-Тоҷики"
     @objc func myThirdLabelViewTapped(_ sender: UITapGestureRecognizer) {
         navigationItem.title = changeTheTitleName(menuListView.textLabel3.text!)
         menuListView.isHidden = true
@@ -169,24 +184,23 @@ class MainViewController: UIViewController {
         words = SQLiteCommands.presentRows(id: 3)
         discoverTable.reloadData()
         dictionaryType = 3
+        searchController.searchBar.text = ""
     }
-    
+    // "Таърихи Ҷустуҷӯ"
     @objc func myFirstSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
         let searchHistoryViewController = SearchHistoryViewController()
         self.navigationController?.pushViewController(searchHistoryViewController, animated: true)
         settingsListView.isHidden = true
         isSettingsOpened = false
-        
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
     }
-    
+    // "Дар Бораи Барнома"
     @objc func mySecondSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
         let appDescriptionViewController = AppDescriptionViewController()
         self.navigationController?.pushViewController(appDescriptionViewController, animated: true)
         settingsListView.isHidden = true
         isSettingsOpened = false
-        
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
     }
@@ -207,8 +221,7 @@ class MainViewController: UIViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(rightHandAction))
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icons8-globe-60"),
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "globe_icon"),
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(leftHandAction))
@@ -216,11 +229,16 @@ class MainViewController: UIViewController {
     
     @objc
     func rightHandAction() {
+        
+        let navbarheight = navigationController?.navigationBar.frame.height ?? 40
+//        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        
         navigationController?.view.addSubview(settingsListView)
-        settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
+        settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight).isActive = true
         settingsListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 2.3).isActive = true
-        settingsListView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        settingsListView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         settingsListView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        
         if(isMenuOpened == false) {
             if(isSettingsOpened == false) {
                 settingsListView.isHidden = false
@@ -238,10 +256,13 @@ class MainViewController: UIViewController {
     
     @objc
     func leftHandAction() {
+        
+        let navbarheight = navigationController?.navigationBar.frame.height ?? 40
+        
         navigationController?.view.addSubview(menuListView)
-        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/10).isActive = true
+        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight).isActive = true
         menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 12).isActive = true
-        menuListView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        menuListView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         menuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
         if(isSettingsOpened == false) {
             if(isMenuOpened == false) {
@@ -274,7 +295,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         menuListView.isHidden = true
         settingsListView.isHidden = true
-        
         let wordDescriptionViewController = WordDescriptionViewController()
         wordDescriptionViewController.configure(word: words[indexPath.row])
         self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)

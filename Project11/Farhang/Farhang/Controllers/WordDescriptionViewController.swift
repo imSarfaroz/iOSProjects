@@ -10,14 +10,14 @@ import UIKit
 class WordDescriptionViewController: UIViewController {
     
     private let wordLabel: UILabel = {
-       let wordLabel = UILabel()
+        let wordLabel = UILabel()
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         wordLabel.font =  UIFont(name: "HelveticaNeue", size: 24)
         return wordLabel
     }()
     
     private let wordDescriptionLabel: UILabel = {
-       let wordLabel = UILabel()
+        let wordLabel = UILabel()
         wordLabel.numberOfLines = 0;
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
@@ -29,11 +29,9 @@ class WordDescriptionViewController: UIViewController {
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()
-
     }
     
     func applyConstraints() {
-        
         let wordText = [
             wordLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/8),
             wordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

@@ -9,7 +9,6 @@ import SQLite
 import SQLite3
 
 class SQLiteCommands {
-    //    static var table = Table("dictionary")
     static var wordTable = Table("word")
     static var historyTable = Table("history")
     
@@ -21,17 +20,17 @@ class SQLiteCommands {
     static let id = Expression<Int>("id")
     
     // Func for presenting Rows
-    static func presentRows(id: Int, searchText: String = "") -> [Dictionary]? {
+    static func presentRows(id: Int, searchText: String = "") -> [Dictionary] {
         guard let database = DBHelper.sharedInstance.database
         else {
             print("datastore connection error")
-            return nil
+            return []
         }
         var dictionaryArray = [Dictionary]()
         wordTable = wordTable.order(word_id.asc)
         
         do {
-            for dictionary in try database.prepare(wordTable.where(dictionaryNumber == id && word.like("%\(searchText)%", escape: .none)).limit(300)){
+            for dictionary in try database.prepare(wordTable.where(dictionaryNumber == id && word.like("\(searchText)%", escape: .none)).limit(50)){
                 let idValue = dictionary[word_id]
                 let wordValue = dictionary[word]
                 let descriptionValue = dictionary[article]
@@ -56,7 +55,6 @@ class SQLiteCommands {
             for history in try database.prepare(historyTable){
                 let hisId = history[id]
                 let wordId = history[word_id]
-                
                 let createObject = WordHistory(id: hisId, word_id: wordId)
                 print("id \(history[id]), word: \(history[word_id])")
                 
@@ -76,9 +74,8 @@ class SQLiteCommands {
             print("datastore connection error")
             return nil
         }
-        // Dictionary Array
         var dictionaryArray = [Dictionary]()
-
+        
         do {
             let words = try database.prepare("SELECT * FROM word WHERE word_id IN \(ids)")
             for dictionary in words {
@@ -92,8 +89,6 @@ class SQLiteCommands {
         } catch {
             print("Present row error: \(error)")
         }
-        
-//        dictionaryArray.sorted()
         return dictionaryArray.sorted()
     }
     

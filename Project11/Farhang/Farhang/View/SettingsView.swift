@@ -14,8 +14,12 @@ class SettingsView: UIView {
         textLabel1.text = "  Таърихи Ҷустуҷӯ"
         textLabel1.textColor = .black
         textLabel1.clipsToBounds = true
-        textLabel1.layer.cornerRadius = 10
-        textLabel1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        if #available(iOS 11.0, *) {
+            textLabel1.layer.cornerRadius = 10
+            textLabel1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         textLabel1.layer.borderWidth = 0.1
         textLabel1.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
         textLabel1.backgroundColor = .white
@@ -28,9 +32,14 @@ class SettingsView: UIView {
         let textLabel2 = UILabel()
         textLabel2.text = "  Дар Бораи Барнома"
         textLabel2.clipsToBounds = true
-        textLabel2.layer.cornerRadius = 10
+        textLabel2.textColor = .black
+        if #available(iOS 11.0, *) {
+            textLabel2.layer.cornerRadius = 10
+            textLabel2.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         textLabel2.layer.borderWidth = 0.1
-        textLabel2.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         textLabel2.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
         textLabel2.backgroundColor = .white
         textLabel2.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +49,6 @@ class SettingsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         addSubview(textLabel1)
         addSubview(textLabel2)
         applyConstraints()

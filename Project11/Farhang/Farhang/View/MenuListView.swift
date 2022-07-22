@@ -13,10 +13,14 @@ class MenuListView: UIView {
         let textLabel1 = UILabel()
         textLabel1.text = "  Тоҷики-Руси"
         textLabel1.textColor = .black
-        textLabel1.clipsToBounds = true
-        textLabel1.layer.cornerRadius = 10
-        textLabel1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         textLabel1.layer.borderWidth = 0.15
+        if #available(iOS 11.0, *) {
+            textLabel1.clipsToBounds = true
+            textLabel1.layer.cornerRadius = 10
+            textLabel1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        } else {
+//            textLabel1.roundCorners([.topLeft, .topRight], radius: 10)
+        }
         textLabel1.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
         textLabel1.backgroundColor = .white
         textLabel1.translatesAutoresizingMaskIntoConstraints = false
@@ -41,10 +45,16 @@ class MenuListView: UIView {
     public let textLabel3: UILabel = {
         let textLabel3 = UILabel()
         textLabel3.text = "  Руси-Тоҷики"
-        textLabel3.clipsToBounds = true
-        textLabel3.layer.cornerRadius = 10
+        textLabel3.textColor = .black
         textLabel3.layer.borderWidth = 0.15
-        textLabel3.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        if #available(iOS 11.0, *) {
+            textLabel3.clipsToBounds = true
+            textLabel3.layer.cornerRadius = 10
+            textLabel3.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+//            textLabel3.roundCorners([.bottomLeft, .bottomRight], radius: 10)
+        }
+        
         textLabel3.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
         textLabel3.backgroundColor = .white
         textLabel3.translatesAutoresizingMaskIntoConstraints = false
@@ -53,8 +63,7 @@ class MenuListView: UIView {
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+        super.init(frame: frame)        
         addSubview(textLabel1)
         addSubview(textLabel2)
         addSubview(textLabel3)
@@ -62,6 +71,7 @@ class MenuListView: UIView {
     }
     
     private func applyConstraints() {
+        
         let text1 = [
             textLabel1.widthAnchor.constraint(equalToConstant: 200),
             textLabel1.heightAnchor.constraint(equalToConstant: 45),
@@ -91,4 +101,13 @@ class MenuListView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
+}
+
+extension UIView {
+    func roundCorners(_ corners:UIRectCorner, radius: CGFloat) {
+    let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    let mask = CAShapeLayer()
+    mask.path = path.cgPath
+    self.layer.mask = mask
+  }
 }
