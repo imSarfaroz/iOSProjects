@@ -14,6 +14,7 @@ class SearchHistoryViewController: UIViewController {
     private let searchHistoryTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(SearchHistoryTableViewCell.self, forCellReuseIdentifier: SearchHistoryTableViewCell.identifies)
+        table.rowHeight = 60
         return table
     }()
     
@@ -22,18 +23,7 @@ class SearchHistoryViewController: UIViewController {
         view.addSubview(searchHistoryTable)
         searchHistoryTable.delegate = self
         searchHistoryTable.dataSource = self
-        historyWords = SQLiteCommands.getAllHistories()
-        let str = historyWords.map { item in
-            String(item.word_id)
-        }
-        var newStr = "("
-        str.forEach { item in
-            newStr += item + ", "
-        }
-        newStr = String(newStr.dropLast(2))
-        newStr += ")"
-        print(newStr)
-        words = SQLiteCommands.presentHistoryRows(ids: newStr)
+        words = SQLiteCommands.presentHistoryRows()
     }
     
     override func viewDidLayoutSubviews() {

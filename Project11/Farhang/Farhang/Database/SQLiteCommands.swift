@@ -68,7 +68,7 @@ class SQLiteCommands {
     }
     
     // Func for presenting Rows
-    static func presentHistoryRows(ids: String) -> [Dictionary]? {
+    static func presentHistoryRows() -> [Dictionary]? {
         guard let database = DBHelper.sharedInstance.database
         else {
             print("datastore connection error")
@@ -77,7 +77,7 @@ class SQLiteCommands {
         var dictionaryArray = [Dictionary]()
         
         do {
-            let words = try database.prepare("SELECT * FROM word WHERE word_id IN \(ids)")
+            let words = try database.prepare("SELECT * FROM word w JOIN history h on h.word_id = w.word_id ORDER BY h.id DESC")
             for dictionary in words {
                 let idValue = dictionary[0] as! Int64
                 let wordValue = dictionary[1] as! String
@@ -89,7 +89,7 @@ class SQLiteCommands {
         } catch {
             print("Present row error: \(error)")
         }
-        return dictionaryArray.sorted()
+        return dictionaryArray
     }
     
     // func for inserting a Row in Database
@@ -100,7 +100,7 @@ class SQLiteCommands {
             return
         }
         do {
-            let word = WordHistory(id: dictionaryValues.word_id, word_id: dictionaryValues.word_id)
+            let word = WordHistory(word_id: dictionaryValues.word_id)
             try database.run(historyTable.insert(word))
             print("successfully inserted")
             

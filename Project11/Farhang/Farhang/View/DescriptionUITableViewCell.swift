@@ -33,7 +33,7 @@ class DescriptionUITableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(word)
-        contentView.addSubview(wordDescription)        
+        contentView.addSubview(wordDescription)
         applyConstraints()
     }
     

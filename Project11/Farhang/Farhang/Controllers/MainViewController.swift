@@ -20,6 +20,8 @@ class MainViewController: UIViewController {
     private let discoverTable: UITableView = {
         let table = UITableView()
         table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: DescriptionUITableViewCell.identifies)
+        table.keyboardDismissMode = .onDrag
+        table.rowHeight = 60
         return table
     }()
     
@@ -316,3 +318,6 @@ extension MainViewController: UISearchResultsUpdating {
 }
 
 
+
+// design cell
+// keyboard

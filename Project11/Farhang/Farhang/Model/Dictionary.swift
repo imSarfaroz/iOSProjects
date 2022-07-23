@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct Dictionary: Comparable {
-    static func < (lhs: Dictionary, rhs: Dictionary) -> Bool {
-        return lhs.word_id > rhs.word_id
-    }
+struct Dictionary {
     
     let word_id: Int
     let word: String

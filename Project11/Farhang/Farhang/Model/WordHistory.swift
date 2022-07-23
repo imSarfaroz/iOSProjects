@@ -8,6 +8,6 @@
 import Foundation
 
 struct WordHistory: Decodable, Encodable {
-    let id: Int
+    var id: Int? = nil
     let word_id: Int
 }
