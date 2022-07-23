@@ -56,12 +56,15 @@ class SettingsView: UIView {
     
     private func applyConstraints() {
         let text1 = [
+            textLabel1.topAnchor.constraint(equalTo: topAnchor),
+            textLabel1.leadingAnchor.constraint(equalTo: leadingAnchor),
             textLabel1.widthAnchor.constraint(equalToConstant: 180),
             textLabel1.heightAnchor.constraint(equalToConstant: 45),
         ]
         
         let text2 = [
             textLabel2.topAnchor.constraint(equalTo: textLabel1.bottomAnchor),
+            textLabel2.leadingAnchor.constraint(equalTo: leadingAnchor),
             textLabel2.widthAnchor.constraint(equalToConstant: 180),
             textLabel2.heightAnchor.constraint(equalToConstant: 45),
         ]

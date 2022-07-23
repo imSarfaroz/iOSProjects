@@ -46,17 +46,17 @@ class MainViewController: UIViewController {
         //items
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: self, action:nil)
         let letterButton1 = UIBarButtonItem(title: "Ҳ", style: .done, target: self, action:  #selector(changeTheLetter1))
-        letterButton1.width = view.frame.width/6.5
+        letterButton1.width = view.bounds.size.width / 6
         let letterButton2 = UIBarButtonItem(title: "Ӯ", style: .done, target: self, action: #selector(changeTheLetter2))
-        letterButton2.width =  view.frame.width/6.5
+        letterButton2.width = view.bounds.size.width / 6
         let letterButton3 = UIBarButtonItem(title: "Ғ", style: .done, target: self, action: #selector(changeTheLetter3))
-        letterButton3.width =  view.frame.width/6.5
+        letterButton3.width = view.bounds.size.width / 6
         let letterButton4 = UIBarButtonItem(title: "Ҷ", style: .done, target: self, action: #selector(changeTheLetter4))
-        letterButton4.width =  view.frame.width/6.5
+        letterButton4.width = view.bounds.size.width / 6
         let letterButton5 = UIBarButtonItem(title: "Қ", style: .done, target: self, action: #selector(changeTheLetter5))
-        letterButton5.width =  view.frame.width/6.5
+        letterButton5.width = view.bounds.size.width / 6
         let letterButton6 = UIBarButtonItem(title: "Й", style: .done, target: self, action: #selector(changeTheLetter6))
-        letterButton6.width =  view.frame.width/6.5
+        letterButton6.width = view.bounds.size.width / 6
         toolBar.items = [flexibleSpace, letterButton1, letterButton2, letterButton3, letterButton4, letterButton5, letterButton6]
         toolBar.tintColor = .black
         toolBar.barStyle = .default
@@ -116,8 +116,10 @@ class MainViewController: UIViewController {
         } else {
             discoverTable.tableHeaderView = searchController.searchBar
             searchController.hidesNavigationBarDuringPresentation = false
+            searchController.dimsBackgroundDuringPresentation = false
             definesPresentationContext = true
         }
+        
         searchController.searchResultsUpdater = self
        
         // Tap gestures
@@ -231,11 +233,11 @@ class MainViewController: UIViewController {
     func rightHandAction() {
         
         let navbarheight = navigationController?.navigationBar.frame.height ?? 40
-//        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
         navigationController?.view.addSubview(settingsListView)
-        settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight).isActive = true
-        settingsListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 2.3).isActive = true
+        settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight + statusBarHeight).isActive = true
+        settingsListView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         settingsListView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         settingsListView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         
@@ -258,10 +260,11 @@ class MainViewController: UIViewController {
     func leftHandAction() {
         
         let navbarheight = navigationController?.navigationBar.frame.height ?? 40
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
         navigationController?.view.addSubview(menuListView)
-        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight).isActive = true
-        menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 12).isActive = true
+        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight + statusBarHeight).isActive = true
+        menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         menuListView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         menuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
         if(isSettingsOpened == false) {
