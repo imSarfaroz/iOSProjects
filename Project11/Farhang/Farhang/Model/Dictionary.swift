@@ -8,7 +8,6 @@
 import Foundation
 
 struct Dictionary {
-    
     let word_id: Int
     let word: String
     let article: String

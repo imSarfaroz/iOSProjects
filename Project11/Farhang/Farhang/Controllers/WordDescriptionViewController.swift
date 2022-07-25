@@ -26,6 +26,9 @@ class WordDescriptionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        // UISplitViewController
+        splitViewController?.preferredDisplayMode = UISplitViewController.DisplayMode.allVisible
+        //
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()

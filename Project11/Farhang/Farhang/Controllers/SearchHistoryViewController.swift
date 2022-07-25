@@ -4,17 +4,17 @@
 //
 //  Created by Sarfaroz on 7/14/22.
 //
-
 import UIKit
 
 class SearchHistoryViewController: UIViewController {
     var words: [Dictionary]!
     var historyWords: [WordHistory]!
+    let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
     
     private let searchHistoryTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(SearchHistoryTableViewCell.self, forCellReuseIdentifier: SearchHistoryTableViewCell.identifies)
-        table.rowHeight = 60
+        table.rowHeight = 55
         return table
     }()
     
@@ -45,9 +45,19 @@ extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let wordDescriptionViewController = WordDescriptionViewController()
-        wordDescriptionViewController.configure(word: words[indexPath.row])
-        self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+        var wordDescriptionViewController = WordDescriptionViewController()
+        
+        if(deviceIdiom == .pad) {
+            wordDescriptionViewController = WordDescriptionViewController()
+            wordDescriptionViewController.configure(word: words[indexPath.row])
+            self.showDetailViewController(UINavigationController(rootViewController: wordDescriptionViewController), sender: nil)
+        } else {
+            
+            wordDescriptionViewController = WordDescriptionViewController()
+            wordDescriptionViewController.configure(word: words[indexPath.row])
+            self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

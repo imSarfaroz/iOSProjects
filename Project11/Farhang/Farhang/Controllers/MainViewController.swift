@@ -10,18 +10,20 @@ import SQLite
 
 class MainViewController: UIViewController {
     
-    var isMenuOpened:Bool = false
+    let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
+    
+    var isLanguageMenuOpened:Bool = false
     var isSettingsOpened:Bool = false
     
     var filteredSearchDictionary = [Dictionary]()
     var dictionaryType:Int = 1
     
     // Main tableView
-    private let discoverTable: UITableView = {
+    @objc private let discoverTable: UITableView = {
         let table = UITableView()
         table.register(DescriptionUITableViewCell.self, forCellReuseIdentifier: DescriptionUITableViewCell.identifies)
         table.keyboardDismissMode = .onDrag
-        table.rowHeight = 60
+        table.rowHeight = 55
         return table
     }()
     
@@ -41,7 +43,7 @@ class MainViewController: UIViewController {
         words = SQLiteCommands.presentRows(id: dictionaryType, searchText: searchText)
         discoverTable.reloadData()
     }
-        //toolbar for keyboard
+    //toolbar for keyboard
     func addToolBar() {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
         
@@ -83,7 +85,7 @@ class MainViewController: UIViewController {
         searchController.searchBar.text! += "й"
     }
     
-    let menuListView: MenuListView = {
+    let languageMenuListView: MenuListView = {
         let view = MenuListView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -102,14 +104,15 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         words = SQLiteCommands.presentRows(id: 1)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-
         navigationItem.title = changeTheTitleName("Тоҷики-Руси")
         view.addSubview(discoverTable)
         discoverTable.delegate = self
         discoverTable.dataSource = self
+        
         addToolBar()
         
         if #available(iOS 11.0, *) {
@@ -121,21 +124,20 @@ class MainViewController: UIViewController {
             searchController.dimsBackgroundDuringPresentation = false
             definesPresentationContext = true
         }
-        
         searchController.searchResultsUpdater = self
-       
+        
         // Tap gestures
         let tapGestureLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstLabelViewTapped(_:)))
         tapGestureLabel1.numberOfTapsRequired = 1
-        menuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
-
+        languageMenuListView.textLabel1.addGestureRecognizer(tapGestureLabel1)
+        
         let tapGestureLabel2 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.mySecondLabelViewTapped(_:)))
         tapGestureLabel2.numberOfTapsRequired = 1
-        menuListView.textLabel2.addGestureRecognizer(tapGestureLabel2)
+        languageMenuListView.textLabel2.addGestureRecognizer(tapGestureLabel2)
         
         let tapGesture3 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myThirdLabelViewTapped(_:)))
         tapGesture3.numberOfTapsRequired = 1
-        menuListView.textLabel3.addGestureRecognizer(tapGesture3)
+        languageMenuListView.textLabel3.addGestureRecognizer(tapGesture3)
         
         let tapGestureSettingsLabel1 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.myFirstSettingsLabelViewTapped(_:)))
         tapGestureSettingsLabel1.numberOfTapsRequired = 1
@@ -144,15 +146,27 @@ class MainViewController: UIViewController {
         let tapGestureSettingsLabel2 = UITapGestureRecognizer(target: self, action: #selector(MainViewController.mySecondSettingsLabelViewTapped(_:)))
         tapGestureSettingsLabel2.numberOfTapsRequired = 1
         settingsListView.textLabel2.addGestureRecognizer(tapGestureSettingsLabel2)
-        
         configureNavbar()
+        
+        
+        //   didTap()
     }
+    
+    //    func didTap() {
+    //        if(languageMenuListView.isHidden == false || settingsListView.isHidden == false) {
+    //            let gesture = UITapGestureRecognizer(target: self, action:  #selector(getter: self.discoverTable))
+    //            discoverTable.addGestureRecognizer(gesture)
+    //            print("tap worked")
+    //        }
+    //        discoverTable.isUserInteractionEnabled = true
+    //    }
+    
     
     // Label taps funcitons   "Тоҷики-Руси"
     @objc func myFirstLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        navigationItem.title = changeTheTitleName(menuListView.textLabel1.text!)
-        menuListView.isHidden = true
-        isMenuOpened = false
+        navigationItem.title = changeTheTitleName(languageMenuListView.textLabel1.text!)
+        languageMenuListView.isHidden = true
+        isLanguageMenuOpened = false
         
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
@@ -164,9 +178,9 @@ class MainViewController: UIViewController {
     }
     // "Tоҷики-Тоҷики"
     @objc func mySecondLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        navigationItem.title = changeTheTitleName(menuListView.textLabel2.text!)
-        menuListView.isHidden = true
-        isMenuOpened = false
+        navigationItem.title = changeTheTitleName(languageMenuListView.textLabel2.text!)
+        languageMenuListView.isHidden = true
+        isLanguageMenuOpened = false
         
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
@@ -178,9 +192,9 @@ class MainViewController: UIViewController {
     }
     // "Руси-Тоҷики"
     @objc func myThirdLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        navigationItem.title = changeTheTitleName(menuListView.textLabel3.text!)
-        menuListView.isHidden = true
-        isMenuOpened = false
+        navigationItem.title = changeTheTitleName(languageMenuListView.textLabel3.text!)
+        languageMenuListView.isHidden = true
+        isLanguageMenuOpened = false
         
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
@@ -233,7 +247,6 @@ class MainViewController: UIViewController {
     
     @objc
     func rightHandAction() {
-        
         let navbarheight = navigationController?.navigationBar.frame.height ?? 40
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
@@ -243,7 +256,7 @@ class MainViewController: UIViewController {
         settingsListView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         settingsListView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         
-        if(isMenuOpened == false) {
+        if(isLanguageMenuOpened == false) {
             if(isSettingsOpened == false) {
                 settingsListView.isHidden = false
                 isSettingsOpened = true
@@ -255,32 +268,42 @@ class MainViewController: UIViewController {
                 view.isUserInteractionEnabled = true
                 searchController.searchBar.isUserInteractionEnabled = true
             }
+        } else if (isLanguageMenuOpened == true){
+            languageMenuListView.isHidden = true
+            settingsListView.isHidden = false
+            isSettingsOpened = true
+            isLanguageMenuOpened = false
         }
     }
     
     @objc
     func leftHandAction() {
-        
         let navbarheight = navigationController?.navigationBar.frame.height ?? 40
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
-        navigationController?.view.addSubview(menuListView)
-        menuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight + statusBarHeight).isActive = true
-        menuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
-        menuListView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        menuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        navigationController?.view.addSubview(languageMenuListView)
+        languageMenuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight + statusBarHeight).isActive = true
+        languageMenuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        languageMenuListView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        languageMenuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        
         if(isSettingsOpened == false) {
-            if(isMenuOpened == false) {
-                menuListView.isHidden = false
-                isMenuOpened = true
+            if(isLanguageMenuOpened == false) {
+                languageMenuListView.isHidden = false
+                isLanguageMenuOpened = true
                 view.isUserInteractionEnabled = false
                 searchController.searchBar.isUserInteractionEnabled = false
-            } else if(isMenuOpened == true) {
-                menuListView.isHidden = true
-                isMenuOpened = false
+            } else if(isLanguageMenuOpened == true) {
+                languageMenuListView.isHidden = true
+                isLanguageMenuOpened = false
                 view.isUserInteractionEnabled = true
                 searchController.searchBar.isUserInteractionEnabled = true
             }
+        } else if(isSettingsOpened == true) {
+            settingsListView.isHidden = true
+            languageMenuListView.isHidden = false
+            isSettingsOpened = false
+            isLanguageMenuOpened = true
         }
     }
 }
@@ -293,16 +316,26 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DescriptionUITableViewCell.identifies, for: indexPath) as! DescriptionUITableViewCell
         cell.configure(word: words[indexPath.row])
+        cell.contentView.isUserInteractionEnabled = true
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        menuListView.isHidden = true
+        languageMenuListView.isHidden = true
         settingsListView.isHidden = true
-        let wordDescriptionViewController = WordDescriptionViewController()
-        wordDescriptionViewController.configure(word: words[indexPath.row])
-        self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+        var wordDescriptionViewController = WordDescriptionViewController()
+        
+        if(deviceIdiom == .pad) {
+            wordDescriptionViewController = WordDescriptionViewController()
+            wordDescriptionViewController.configure(word: words[indexPath.row])
+            self.showDetailViewController(UINavigationController(rootViewController: wordDescriptionViewController), sender: nil)
+        } else {
+            
+            wordDescriptionViewController = WordDescriptionViewController()
+            wordDescriptionViewController.configure(word: words[indexPath.row])
+            self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+        }
         
         SQLiteCommands.insertRow(words[indexPath.row])
     }
@@ -316,8 +349,3 @@ extension MainViewController: UISearchResultsUpdating {
         guard searchController.searchBar.text != nil else {return}
     }
 }
-
-
-
-// design cell
-// keyboard
