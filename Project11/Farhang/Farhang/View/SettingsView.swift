@@ -18,7 +18,6 @@ class SettingsView: UIView {
             textLabel1.layer.cornerRadius = 10
             textLabel1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         } else {
-            // Fallback on earlier versions
         }
         textLabel1.layer.borderWidth = 0.1
         textLabel1.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
@@ -37,7 +36,6 @@ class SettingsView: UIView {
             textLabel2.layer.cornerRadius = 10
             textLabel2.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
-            // Fallback on earlier versions
         }
         textLabel2.layer.borderWidth = 0.1
         textLabel2.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
@@ -68,7 +66,6 @@ class SettingsView: UIView {
             textLabel2.widthAnchor.constraint(equalToConstant: 180),
             textLabel2.heightAnchor.constraint(equalToConstant: 45),
         ]
-        
         NSLayoutConstraint.activate(text1)
         NSLayoutConstraint.activate(text2)
     }

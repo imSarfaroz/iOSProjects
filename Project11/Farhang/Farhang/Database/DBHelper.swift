@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SQLite
 
 class DBHelper {

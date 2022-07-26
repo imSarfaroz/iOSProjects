@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 class WordDescriptionViewController: UIViewController {
     
     private let wordLabel: UILabel = {

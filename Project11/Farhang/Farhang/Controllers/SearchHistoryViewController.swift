@@ -52,12 +52,10 @@ extension SearchHistoryViewController: UITableViewDelegate, UITableViewDataSourc
             wordDescriptionViewController.configure(word: words[indexPath.row])
             self.showDetailViewController(UINavigationController(rootViewController: wordDescriptionViewController), sender: nil)
         } else {
-            
             wordDescriptionViewController = WordDescriptionViewController()
             wordDescriptionViewController.configure(word: words[indexPath.row])
             self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
         }
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

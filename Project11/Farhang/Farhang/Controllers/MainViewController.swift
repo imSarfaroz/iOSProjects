@@ -9,12 +9,10 @@ import UIKit
 import SQLite
 
 class MainViewController: UIViewController {
-    
     let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
     
     var isLanguageMenuOpened:Bool = false
     var isSettingsOpened:Bool = false
-    
     var filteredSearchDictionary = [Dictionary]()
     var dictionaryType:Int = 1
     
@@ -31,6 +29,7 @@ class MainViewController: UIViewController {
     private let searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
+        controller.searchBar.barTintColor = .white
         controller.searchBar.searchBarStyle = .minimal
         controller.searchBar.spellCheckingType = .no
         controller.searchBar.autocapitalizationType = .none
@@ -46,26 +45,27 @@ class MainViewController: UIViewController {
     //toolbar for keyboard
     func addToolBar() {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
-        
+        var flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
+       
         //items
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: self, action:nil)
-        let letterButton1 = UIBarButtonItem(title: "Ҳ", style: .done, target: self, action:  #selector(changeTheLetter1))
-        letterButton1.width = view.bounds.size.width / 6
+        let letterButton1 = UIBarButtonItem(title: "Ҳ", style: .done,  target: self, action:  #selector(changeTheLetter1))
+        flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
         let letterButton2 = UIBarButtonItem(title: "Ӯ", style: .done, target: self, action: #selector(changeTheLetter2))
-        letterButton2.width = view.bounds.size.width / 6
+        flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
         let letterButton3 = UIBarButtonItem(title: "Ғ", style: .done, target: self, action: #selector(changeTheLetter3))
-        letterButton3.width = view.bounds.size.width / 6
+        flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
         let letterButton4 = UIBarButtonItem(title: "Ҷ", style: .done, target: self, action: #selector(changeTheLetter4))
-        letterButton4.width = view.bounds.size.width / 6
+        flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
         let letterButton5 = UIBarButtonItem(title: "Қ", style: .done, target: self, action: #selector(changeTheLetter5))
-        letterButton5.width = view.bounds.size.width / 6
+        flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
         let letterButton6 = UIBarButtonItem(title: "Й", style: .done, target: self, action: #selector(changeTheLetter6))
-        letterButton6.width = view.bounds.size.width / 6
-        toolBar.items = [flexibleSpace, letterButton1, letterButton2, letterButton3, letterButton4, letterButton5, letterButton6]
+        flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
+        
+        toolBar.items = [letterButton1,flexibleSpace1, letterButton2,flexibleSpace1, letterButton3,flexibleSpace1, letterButton4,flexibleSpace1, letterButton5,flexibleSpace1 ,letterButton6,]
         toolBar.tintColor = .black
-        toolBar.barStyle = .default
         self.searchController.searchBar.inputAccessoryView = toolBar
     }
+    
     @objc func changeTheLetter1() {
         searchController.searchBar.text! += "ҳ"
     }
@@ -88,6 +88,7 @@ class MainViewController: UIViewController {
     let languageMenuListView: MenuListView = {
         let view = MenuListView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
         return view
     }()
     
@@ -98,22 +99,21 @@ class MainViewController: UIViewController {
         return view
     }()
     
-    var words: [Dictionary] = []
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         words = SQLiteCommands.presentRows(id: 1)
     }
     
+    var words: [Dictionary] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.red
         navigationItem.title = changeTheTitleName("Тоҷики-Руси")
         view.addSubview(discoverTable)
+        
         discoverTable.delegate = self
         discoverTable.dataSource = self
-        
-        addToolBar()
         
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
@@ -147,20 +147,8 @@ class MainViewController: UIViewController {
         tapGestureSettingsLabel2.numberOfTapsRequired = 1
         settingsListView.textLabel2.addGestureRecognizer(tapGestureSettingsLabel2)
         configureNavbar()
-        
-        
-        //   didTap()
+        addToolBar()
     }
-    
-    //    func didTap() {
-    //        if(languageMenuListView.isHidden == false || settingsListView.isHidden == false) {
-    //            let gesture = UITapGestureRecognizer(target: self, action:  #selector(getter: self.discoverTable))
-    //            discoverTable.addGestureRecognizer(gesture)
-    //            print("tap worked")
-    //        }
-    //        discoverTable.isUserInteractionEnabled = true
-    //    }
-    
     
     // Label taps funcitons   "Тоҷики-Руси"
     @objc func myFirstLabelViewTapped(_ sender: UITapGestureRecognizer) {
@@ -235,6 +223,8 @@ class MainViewController: UIViewController {
     // Navigation bar
     func configureNavbar() {
         navigationController?.navigationBar.tintColor = .black
+//        navigationController?.navigationBar.backgroundColor = UIColor(red: 200/255, green: 32/255, blue: 21/255, alpha: 1.0)
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings_icon"),
                                                             style: .plain,
                                                             target: self,
@@ -249,18 +239,18 @@ class MainViewController: UIViewController {
     func rightHandAction() {
         let navbarheight = navigationController?.navigationBar.frame.height ?? 40
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
         navigationController?.view.addSubview(settingsListView)
         settingsListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight + statusBarHeight).isActive = true
         settingsListView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         settingsListView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         settingsListView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        searchController.searchBar.isUserInteractionEnabled = false
         
         if(isLanguageMenuOpened == false) {
             if(isSettingsOpened == false) {
                 settingsListView.isHidden = false
                 isSettingsOpened = true
-                view.isUserInteractionEnabled = false
+                //                view.isUserInteractionEnabled = false
                 searchController.searchBar.isUserInteractionEnabled = false
             } else if(isSettingsOpened == true) {
                 settingsListView.isHidden = true
@@ -280,18 +270,18 @@ class MainViewController: UIViewController {
     func leftHandAction() {
         let navbarheight = navigationController?.navigationBar.frame.height ?? 40
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
         navigationController?.view.addSubview(languageMenuListView)
         languageMenuListView.topAnchor.constraint(equalTo: view.topAnchor, constant: navbarheight + statusBarHeight).isActive = true
         languageMenuListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         languageMenuListView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         languageMenuListView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        searchController.searchBar.isUserInteractionEnabled = false
         
         if(isSettingsOpened == false) {
             if(isLanguageMenuOpened == false) {
                 languageMenuListView.isHidden = false
                 isLanguageMenuOpened = true
-                view.isUserInteractionEnabled = false
+                //                view.isUserInteractionEnabled = false
                 searchController.searchBar.isUserInteractionEnabled = false
             } else if(isLanguageMenuOpened == true) {
                 languageMenuListView.isHidden = true
@@ -305,6 +295,8 @@ class MainViewController: UIViewController {
             isSettingsOpened = false
             isLanguageMenuOpened = true
         }
+//        didTap()
+        
     }
 }
 
@@ -322,22 +314,28 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        languageMenuListView.isHidden = true
-        settingsListView.isHidden = true
-        var wordDescriptionViewController = WordDescriptionViewController()
         
-        if(deviceIdiom == .pad) {
-            wordDescriptionViewController = WordDescriptionViewController()
-            wordDescriptionViewController.configure(word: words[indexPath.row])
-            self.showDetailViewController(UINavigationController(rootViewController: wordDescriptionViewController), sender: nil)
-        } else {
+        if (languageMenuListView.isHidden == true && settingsListView.isHidden == true) {
+            var wordDescriptionViewController = WordDescriptionViewController()
             
-            wordDescriptionViewController = WordDescriptionViewController()
-            wordDescriptionViewController.configure(word: words[indexPath.row])
-            self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+            if(deviceIdiom == .pad) {
+                wordDescriptionViewController = WordDescriptionViewController()
+                wordDescriptionViewController.configure(word: words[indexPath.row])
+                self.showDetailViewController(UINavigationController(rootViewController: wordDescriptionViewController), sender: nil)
+            } else {
+                
+                wordDescriptionViewController = WordDescriptionViewController()
+                wordDescriptionViewController.configure(word: words[indexPath.row])
+                self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)
+            }
+            SQLiteCommands.insertRow(words[indexPath.row])
+        } else {
+            languageMenuListView.isHidden = true
+            settingsListView.isHidden = true
+            searchController.searchBar.isUserInteractionEnabled = true
+            isSettingsOpened = true
+            isLanguageMenuOpened = true
         }
-        
-        SQLiteCommands.insertRow(words[indexPath.row])
     }
 }
 
