@@ -8,7 +8,7 @@
 import UIKit
 import SQLite
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UIBarPositioningDelegate {
     let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
     
     var isLanguageMenuOpened:Bool = false
@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
     private let searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
-        controller.searchBar.barTintColor = .white
+        controller.searchBar.backgroundColor = .white
         controller.searchBar.searchBarStyle = .minimal
         controller.searchBar.spellCheckingType = .no
         controller.searchBar.autocapitalizationType = .none
@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
     func addToolBar() {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
         var flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
-       
+        
         //items
         let letterButton1 = UIBarButtonItem(title: "Ҳ", style: .done,  target: self, action:  #selector(changeTheLetter1))
         flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
@@ -108,22 +108,15 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.red
         navigationItem.title = changeTheTitleName("Тоҷики-Руси")
         view.addSubview(discoverTable)
         
         discoverTable.delegate = self
         discoverTable.dataSource = self
-        
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = false
-        } else {
-            discoverTable.tableHeaderView = searchController.searchBar
-            searchController.hidesNavigationBarDuringPresentation = false
-            searchController.dimsBackgroundDuringPresentation = false
-            definesPresentationContext = true
-        }
+        discoverTable.tableHeaderView = searchController.searchBar
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
         searchController.searchResultsUpdater = self
         
         // Tap gestures
@@ -222,8 +215,21 @@ class MainViewController: UIViewController {
     
     // Navigation bar
     func configureNavbar() {
+        
+        let myBackgroundColor =  UIColor(red: 198/255, green: 0/255, blue: 0/255, alpha: 1.0)
         navigationController?.navigationBar.tintColor = .black
-//        navigationController?.navigationBar.backgroundColor = UIColor(red: 200/255, green: 32/255, blue: 21/255, alpha: 1.0)
+        
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithDefaultBackground()
+            appearance.backgroundColor = myBackgroundColor
+            
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            
+        } else {
+            navigationController?.navigationBar.barTintColor = myBackgroundColor
+        }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings_icon"),
                                                             style: .plain,
@@ -295,8 +301,6 @@ class MainViewController: UIViewController {
             isSettingsOpened = false
             isLanguageMenuOpened = true
         }
-//        didTap()
-        
     }
 }
 
@@ -347,3 +351,4 @@ extension MainViewController: UISearchResultsUpdating {
         guard searchController.searchBar.text != nil else {return}
     }
 }
+

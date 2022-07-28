@@ -10,14 +10,14 @@ class AppDescriptionViewController: UIViewController {
     private let wordLabel: UILabel = {
         let wordLabel = UILabel()
         wordLabel.text = "Дар Бораи Барнома"
-        wordLabel.font = UIFont(name: "HelveticaNeue", size: 18)
+        wordLabel.font = UIFont(name: "HelveticaNeue", size: 17)
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel
     }()
     
     private let wordDescriptionLabel: UILabel = {
         let wordLabel = UILabel()
-        wordLabel.text = "Фарҳанг - луғати руси-тоҷики, тоҷики-руси ва тоҷики-тоҷики мебошад ки дорои 132400 калима аст.Луғат офлайн кор мекунад ва пайвасти интернетро талаб намекунад. Ин барнома барои истифода комилан ройгон аст. \n\n\nTаҳиякунанда: ширкати Abad Technologies (Душанбе, Тоҷикистон) \n\nПешниҳод ё савол доред? Паёми шуморо интизорем: info@abad.tj"
+        wordLabel.text = "Фарҳанг - луғати руси-тоҷики, тоҷики-руси ва тоҷики-тоҷики мебошад ки дорои 132400 калима аст. Луғат офлайн кор мекунад ва пайвасти интернетро талаб намекунад. Ин барнома барои истифода комилан ройгон аст. \n\n\nTаҳиякунанда: ширкати Abad Technologies (Душанбе, Тоҷикистон) \n\nПешниҳод ё савол доред? Паёми шуморо интизорем: info@abad.tj"
         wordLabel.numberOfLines = 0
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         return wordLabel

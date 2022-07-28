@@ -11,7 +11,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
         let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
         
         if(deviceIdiom == .pad) {
@@ -31,7 +30,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let windowScene = (scene as? UIWindowScene) else { return }
             window = UIWindow(frame: windowScene.coordinateSpace.bounds)
             window?.windowScene = windowScene
-            window?.rootViewController = UINavigationController(rootViewController:  MainViewController())
+            let primaryViewController = MainViewController()
+            window?.rootViewController = UINavigationController(rootViewController:  primaryViewController)
+
             window?.makeKeyAndVisible()
         }
     }
