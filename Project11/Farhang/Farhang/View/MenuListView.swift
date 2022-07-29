@@ -19,7 +19,6 @@ class MenuListView: UIView {
             textLabel1.layer.cornerRadius = 10
             textLabel1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         } else {
-            //            textLabel1.roundCorners([.topLeft, .topRight], radius: 10)
         }
         textLabel1.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
         textLabel1.backgroundColor = .white
@@ -52,7 +51,6 @@ class MenuListView: UIView {
             textLabel3.layer.cornerRadius = 10
             textLabel3.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
-            //            textLabel3.roundCorners([.bottomLeft, .bottomRight], radius: 10)
         }
         
         textLabel3.layer.borderColor = UIColor(red:100/255, green:100/255, blue:100/255, alpha: 1).cgColor
@@ -90,7 +88,6 @@ class MenuListView: UIView {
             textLabel3.widthAnchor.constraint(equalToConstant: 200),
             textLabel3.heightAnchor.constraint(equalToConstant: 45),
         ]
-        
         NSLayoutConstraint.activate(text1)
         NSLayoutConstraint.activate(text2)
         NSLayoutConstraint.activate(text3)
@@ -101,14 +98,5 @@ class MenuListView: UIView {
     }
     required init?(coder: NSCoder) {
         fatalError()
-    }
-}
-
-extension UIView {
-    func roundCorners(_ corners:UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        self.layer.mask = mask
     }
 }

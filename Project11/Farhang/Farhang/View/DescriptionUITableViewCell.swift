@@ -12,7 +12,11 @@ class DescriptionUITableViewCell: UITableViewCell {
     
     private let word: UILabel = {
         let word = UILabel()
-        word.textColor = .black
+        if #available(iOS 13.0, *) {
+            word.tintColor = UIColor.label
+        } else {
+            word.tintColor =  UIColor.black
+        }
         word.translatesAutoresizingMaskIntoConstraints = false
         word.font = UIFont(name: "HelveticaNeue", size: 18)
         return word
@@ -20,7 +24,11 @@ class DescriptionUITableViewCell: UITableViewCell {
     
     private let wordDescription: UILabel = {
         let wordDescription = UILabel()
-        wordDescription.textColor = .black
+        if #available(iOS 13.0, *) {
+            wordDescription.tintColor = UIColor.label
+        } else {
+            wordDescription.tintColor = UIColor.black
+        }
         wordDescription.translatesAutoresizingMaskIntoConstraints = false
         wordDescription.lineBreakMode = .byTruncatingTail
         wordDescription.numberOfLines = 1;

@@ -21,7 +21,6 @@ class SQLiteCommands {
     static func presentRows(id: Int, searchText: String = "") -> [Dictionary] {
         guard let database = DBHelper.sharedInstance.database
         else {
-            print("datastore connection error")
             return []
         }
         var dictionaryArray = [Dictionary]()
@@ -37,7 +36,7 @@ class SQLiteCommands {
                 dictionaryArray.append(createObject)
             }
         } catch {
-            print("Present row error: \(error)")
+        
         }
         return dictionaryArray
     }

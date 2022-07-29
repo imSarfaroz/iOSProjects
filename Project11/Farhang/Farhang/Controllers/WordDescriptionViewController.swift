@@ -24,15 +24,17 @@ class WordDescriptionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        // UISplitViewController
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor.systemBackground
+        } else {
+            view.backgroundColor = UIColor.white
+        }
         splitViewController?.preferredDisplayMode = UISplitViewController.DisplayMode.allVisible
-        //
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()
     }
-    
+
     func applyConstraints() {
         let wordText = [
             wordLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/8),

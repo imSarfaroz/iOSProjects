@@ -29,7 +29,6 @@ class MainViewController: UIViewController, UIBarPositioningDelegate {
     private let searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
         controller.searchBar.placeholder = "Калимаро ворид кунед..."
-        controller.searchBar.backgroundColor = .white
         controller.searchBar.searchBarStyle = .minimal
         controller.searchBar.spellCheckingType = .no
         controller.searchBar.autocapitalizationType = .none
@@ -62,7 +61,13 @@ class MainViewController: UIViewController, UIBarPositioningDelegate {
         flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action:nil)
         
         toolBar.items = [letterButton1,flexibleSpace1, letterButton2,flexibleSpace1, letterButton3,flexibleSpace1, letterButton4,flexibleSpace1, letterButton5,flexibleSpace1 ,letterButton6,]
-        toolBar.tintColor = .black
+        
+        if #available(iOS 13.0, *) {
+            toolBar.tintColor = UIColor.label
+        } else {
+            toolBar.tintColor = UIColor.black
+        }
+    
         self.searchController.searchBar.inputAccessoryView = toolBar
     }
     
@@ -196,12 +201,18 @@ class MainViewController: UIViewController, UIBarPositioningDelegate {
     }
     // "Дар Бораи Барнома"
     @objc func mySecondSettingsLabelViewTapped(_ sender: UITapGestureRecognizer) {
-        let appDescriptionViewController = AppDescriptionViewController()
-        self.navigationController?.pushViewController(appDescriptionViewController, animated: true)
         settingsListView.isHidden = true
         isSettingsOpened = false
         view.isUserInteractionEnabled = true
         searchController.searchBar.isUserInteractionEnabled = true
+        
+        if(deviceIdiom == .pad) {
+            let appDescriptionViewController = AppDescriptionViewController()
+            self.showDetailViewController(UINavigationController(rootViewController: appDescriptionViewController), sender: nil)
+        } else {
+            let appDescriptionViewController = AppDescriptionViewController()
+            self.navigationController?.pushViewController(appDescriptionViewController, animated: true)
+        }
     }
     
     func changeTheTitleName(_ title: String) -> String {
@@ -215,22 +226,11 @@ class MainViewController: UIViewController, UIBarPositioningDelegate {
     
     // Navigation bar
     func configureNavbar() {
-        
-        let myBackgroundColor =  UIColor(red: 198/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        navigationController?.navigationBar.tintColor = .black
-        
         if #available(iOS 13.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithDefaultBackground()
-            appearance.backgroundColor = myBackgroundColor
-            
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-            
+            navigationController?.navigationBar.tintColor = UIColor.label
         } else {
-            navigationController?.navigationBar.barTintColor = myBackgroundColor
+            navigationController?.navigationBar.tintColor = UIColor.black
         }
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings_icon"),
                                                             style: .plain,
                                                             target: self,
@@ -256,7 +256,6 @@ class MainViewController: UIViewController, UIBarPositioningDelegate {
             if(isSettingsOpened == false) {
                 settingsListView.isHidden = false
                 isSettingsOpened = true
-                //                view.isUserInteractionEnabled = false
                 searchController.searchBar.isUserInteractionEnabled = false
             } else if(isSettingsOpened == true) {
                 settingsListView.isHidden = true
@@ -287,7 +286,6 @@ class MainViewController: UIViewController, UIBarPositioningDelegate {
             if(isLanguageMenuOpened == false) {
                 languageMenuListView.isHidden = false
                 isLanguageMenuOpened = true
-                //                view.isUserInteractionEnabled = false
                 searchController.searchBar.isUserInteractionEnabled = false
             } else if(isLanguageMenuOpened == true) {
                 languageMenuListView.isHidden = true
@@ -327,7 +325,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
                 wordDescriptionViewController.configure(word: words[indexPath.row])
                 self.showDetailViewController(UINavigationController(rootViewController: wordDescriptionViewController), sender: nil)
             } else {
-                
                 wordDescriptionViewController = WordDescriptionViewController()
                 wordDescriptionViewController.configure(word: words[indexPath.row])
                 self.navigationController?.pushViewController(wordDescriptionViewController, animated: true)

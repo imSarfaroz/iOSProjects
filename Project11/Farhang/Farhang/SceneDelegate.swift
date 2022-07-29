@@ -32,7 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.windowScene = windowScene
             let primaryViewController = MainViewController()
             window?.rootViewController = UINavigationController(rootViewController:  primaryViewController)
-
             window?.makeKeyAndVisible()
         }
     }
@@ -52,4 +51,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
     }
 }
-

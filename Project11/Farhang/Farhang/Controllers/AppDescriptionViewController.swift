@@ -25,19 +25,14 @@ class AppDescriptionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = UIColor.systemBackground
+        } else {
+            view.backgroundColor = UIColor.white
+        }
         view.addSubview(wordLabel)
         view.addSubview(wordDescriptionLabel)
         applyConstraints()
-        configureNavbar()
-    }
-    
-    func configureNavbar() {
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "info"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: nil)
     }
     
     func applyConstraints() {

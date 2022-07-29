@@ -13,4 +13,3 @@ struct Dictionary {
     let article: String
     let dictionary: Int
 }
-
